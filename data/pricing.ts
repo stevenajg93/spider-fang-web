@@ -1,0 +1,53 @@
+export const packages = [
+  {
+    id: "strike",
+    name: "Strike",
+    price: 500,
+    originalPrice: 500,
+    description: "Perfect for startups and small businesses",
+    features: [
+      "5-page responsive website",
+      "Mobile-first design",
+      "Basic SEO setup",
+      "Contact form integration",
+      "1 month support"
+    ],
+    popular: false,
+    priceKey: "strike_package"
+  },
+  {
+    id: "venom",
+    name: "Venom",
+    price: 1500,
+    originalPrice: 1500,
+    description: "Ideal for growing businesses",
+    features: [
+      "10-page responsive website",
+      "Custom design system",
+      "Advanced SEO optimization",
+      "CMS integration",
+      "Analytics setup",
+      "3 months support"
+    ],
+    popular: true,
+    priceKey: "venom_package"
+  },
+  {
+    id: "web",
+    name: "Web",
+    price: 3000,
+    originalPrice: 3000,
+    description: "Complete solution for established businesses",
+    features: [
+      "Unlimited pages",
+      "Custom functionality",
+      "E-commerce integration",
+      "Advanced analytics",
+      "Performance optimization",
+      "6 months support",
+      "Priority support"
+    ],
+    popular: false,
+    priceKey: "web_package"
+  }
+] as const;
