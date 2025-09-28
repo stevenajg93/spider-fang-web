@@ -27,15 +27,27 @@ export async function chat(messages: ChatMessage[], context: ChatContext): Promi
 
     const lastMessage = messages[messages.length - 1]?.content.toLowerCase() || ""
 
-    if (lastMessage.includes("price") || lastMessage.includes("cost") || lastMessage.includes("budget")) {
+    if (
+      lastMessage.includes("price") ||
+      lastMessage.includes("cost") ||
+      lastMessage.includes("budget")
+    ) {
       return "Demo mode — Our packages start from £500 for Strike (landing pages) up to £2500+ for Web (full applications). Each includes strategy, design, development, and launch support. Try 'Compare Packages' to see the full breakdown!"
     }
 
-    if (lastMessage.includes("timeline") || lastMessage.includes("how long") || lastMessage.includes("when")) {
+    if (
+      lastMessage.includes("timeline") ||
+      lastMessage.includes("how long") ||
+      lastMessage.includes("when")
+    ) {
       return "Demo mode — Typical timelines: Strike (1-2 weeks), Venom (2-4 weeks), Web (4-8 weeks). We work in focused sprints with regular check-ins. Book a consultation to discuss your specific timeline needs!"
     }
 
-    if (lastMessage.includes("book") || lastMessage.includes("consultation") || lastMessage.includes("meeting")) {
+    if (
+      lastMessage.includes("book") ||
+      lastMessage.includes("consultation") ||
+      lastMessage.includes("meeting")
+    ) {
       return "Demo mode — I'd love to discuss your project! Click 'Book Consultation' below to schedule a free 30-minute strategy session. We'll cover your goals, timeline, and how we can help you succeed."
     }
 

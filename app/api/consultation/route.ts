@@ -1,11 +1,23 @@
 import { type NextRequest, NextResponse } from "next/server"
+
 import { createConsultationEvent } from "@/lib/adapters/calendar-adapter"
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
 
-    const { name, email, company, phone, budget, timeline, services, goals, preferredDate, preferredTime } = body
+    const {
+      name,
+      email,
+      company,
+      phone,
+      budget,
+      timeline,
+      services,
+      goals,
+      preferredDate,
+      preferredTime,
+    } = body
 
     // Validate required fields
     if (!name || !email || !budget || !timeline || !services?.length) {
@@ -34,7 +46,9 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: calendarResult ? "Consultation booked successfully" : "Consultation request received",
+      message: calendarResult
+        ? "Consultation booked successfully"
+        : "Consultation request received",
       calendarResult,
     })
   } catch (error) {

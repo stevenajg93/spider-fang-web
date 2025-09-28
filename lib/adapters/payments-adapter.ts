@@ -26,7 +26,10 @@ export async function createCheckoutSession(request: CheckoutRequest): Promise<C
   throw new Error("Stripe integration not configured. Set STRIPE_SECRET_KEY to enable.")
 }
 
-export async function handleWebhook(body: string, signature: string): Promise<{ success: boolean }> {
+export async function handleWebhook(
+  body: string,
+  signature: string,
+): Promise<{ success: boolean }> {
   if (DEMO) {
     // Demo mode - always return success
     return { success: true }

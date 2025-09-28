@@ -7,23 +7,28 @@ export function FinalCta() {
   const { openDialog } = useBookingDialog()
 
   return (
-    <section className="py-20 bg-gradient-to-b from-gray-900/50 to-black relative overflow-hidden">
+    <section className="relative overflow-hidden bg-gradient-to-b from-gray-900/50 to-black py-20">
       {/* Background Pattern */}
-      <div className="absolute inset-0 spider-web-bg opacity-30" />
+      <div className="spider-web-bg absolute inset-0 opacity-30" />
 
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="font-bebas text-4xl sm:text-6xl text-white mb-6 tracking-wide">Ready to Bite Back?</h2>
-        <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
-          Let's discuss your project and create a website that drives real results for your business.
+      <div className="relative z-10 mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+        <h2 className="font-bebas mb-6 text-4xl tracking-wide text-white sm:text-6xl">
+          Ready to Bite Back?
+        </h2>
+        <p className="mx-auto mb-8 max-w-2xl text-xl leading-relaxed text-gray-300">
+          Let's discuss your project and create a website that drives real results for your
+          business.
         </p>
         <Button
           size="lg"
-          className="bg-red-600 hover:bg-red-700 text-white font-semibold px-12 py-6 text-xl rounded-2xl shadow-2xl hover:shadow-red-600/25 transition-all duration-300 transform hover:scale-105"
+          className="transform rounded-2xl bg-red-600 px-12 py-6 text-xl font-semibold text-white shadow-2xl transition-all duration-300 hover:scale-105 hover:bg-red-700 hover:shadow-red-600/25"
           onClick={openDialog}
         >
           Book Your Free Consultation
         </Button>
-        <p className="text-sm text-gray-500 mt-4">No commitment • 30-minute strategy session • Free project estimate</p>
+        <p className="mt-4 text-sm text-gray-500">
+          No commitment • 30-minute strategy session • Free project estimate
+        </p>
       </div>
     </section>
   )

@@ -1,11 +1,14 @@
 "use client"
 
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { motion } from "framer-motion"
 import { useEffect, useMemo } from "react"
-import { useToast } from "@/components/ui/use-toast"
+
+import Link from "next/link"
 import { useSearchParams } from "next/navigation"
+
+import { Button } from "@/components/ui/button"
+import { useToast } from "@/components/ui/use-toast"
+import { motion } from "framer-motion"
+
 
 const MEET_LINK = process.env.NEXT_PUBLIC_MEET_LINK || "#"
 
@@ -19,8 +22,7 @@ export default function ThankYouPage() {
     if (via === "purchase") {
       return {
         title: `Thanks — your ${pkg ? pkg : "package"} request is noted`,
-        desc:
-          "We will reach out shortly to confirm details and set up your build schedule. No payment taken yet — this is demo mode.",
+        desc: "We will reach out shortly to confirm details and set up your build schedule. No payment taken yet — this is demo mode.",
         primaryHref: "/",
         primaryText: "Back to site",
         secondaryHref: MEET_LINK,
@@ -29,8 +31,7 @@ export default function ThankYouPage() {
     }
     return {
       title: "Thanks — your free prototype request is in",
-      desc:
-        "Next step: book your kickoff call so we can understand your vision and start your free £500 homepage prototype.",
+      desc: "Next step: book your kickoff call so we can understand your vision and start your free £500 homepage prototype.",
       primaryHref: MEET_LINK,
       primaryText: "Book Your Kickoff Call",
       secondaryHref: "/",
@@ -56,9 +57,7 @@ export default function ThankYouPage() {
         transition={{ duration: 0.6 }}
         className="mx-auto max-w-2xl"
       >
-        <h1 className="text-4xl font-extrabold tracking-tight md:text-6xl">
-          {content.title}
-        </h1>
+        <h1 className="text-4xl font-extrabold tracking-tight md:text-6xl">{content.title}</h1>
         <p className="mt-4 text-muted-foreground md:text-lg">{content.desc}</p>
 
         <div className="mt-8 flex justify-center gap-3">

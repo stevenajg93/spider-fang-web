@@ -1,11 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
-  content: [
-    "./pages/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./app/**/*.{ts,tsx}",
-  ],
+  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}"],
   theme: {
     container: { center: true, padding: "1rem" },
     extend: {
@@ -34,7 +30,10 @@ module.exports = {
         "2xl": "24px",
       },
       keyframes: {
-        float: { "0%,100%": { transform: "translateY(0)" }, "50%": { transform: "translateY(-8px)" } },
+        float: {
+          "0%,100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-8px)" },
+        },
         pulseGlow: {
           "0%,100%": { opacity: "0.3", filter: "blur(24px)" },
           "50%": { opacity: "0.7", filter: "blur(28px)" },

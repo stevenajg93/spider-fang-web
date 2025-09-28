@@ -1,28 +1,21 @@
 import * as React from "react"
-import * as DialogPrimitive from "@radix-ui/react-dialog"
-import { cn } from "@/lib/utils"
 
-function Drawer({
-  ...props
-}: React.ComponentProps<typeof DialogPrimitive.Root>) {
+import { cn } from "@/lib/utils"
+import * as DialogPrimitive from "@radix-ui/react-dialog"
+
+function Drawer({ ...props }: React.ComponentProps<typeof DialogPrimitive.Root>) {
   return <DialogPrimitive.Root data-slot="drawer" {...props} />
 }
 
-function DrawerTrigger({
-  ...props
-}: React.ComponentProps<typeof DialogPrimitive.Trigger>) {
+function DrawerTrigger({ ...props }: React.ComponentProps<typeof DialogPrimitive.Trigger>) {
   return <DialogPrimitive.Trigger data-slot="drawer-trigger" {...props} />
 }
 
-function DrawerPortal({
-  ...props
-}: React.ComponentProps<typeof DialogPrimitive.Portal>) {
+function DrawerPortal({ ...props }: React.ComponentProps<typeof DialogPrimitive.Portal>) {
   return <DialogPrimitive.Portal data-slot="drawer-portal" {...props} />
 }
 
-function DrawerClose({
-  ...props
-}: React.ComponentProps<typeof DialogPrimitive.Close>) {
+function DrawerClose({ ...props }: React.ComponentProps<typeof DialogPrimitive.Close>) {
   return <DialogPrimitive.Close data-slot="drawer-close" {...props} />
 }
 
@@ -37,7 +30,7 @@ function DrawerOverlay({
         "fixed inset-0 z-50 bg-black/50 backdrop-blur-sm",
         "data-[state=open]:animate-in data-[state=closed]:animate-out",
         "data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0",
-        className
+        className,
       )}
       {...props}
     />
@@ -60,7 +53,7 @@ function DrawerContent({
           // slide-up animation
           "data-[state=open]:animate-in data-[state=closed]:animate-out",
           "data-[state=open]:slide-in-from-bottom-1/2 data-[state=closed]:slide-out-to-bottom-1/2",
-          className
+          className,
         )}
         {...props}
       >
@@ -70,10 +63,7 @@ function DrawerContent({
   )
 }
 
-function DrawerHeader({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+function DrawerHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="drawer-header"
@@ -83,10 +73,7 @@ function DrawerHeader({
   )
 }
 
-function DrawerFooter({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+function DrawerFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="drawer-footer"
@@ -96,10 +83,7 @@ function DrawerFooter({
   )
 }
 
-function DrawerTitle({
-  className,
-  ...props
-}: React.ComponentProps<typeof DialogPrimitive.Title>) {
+function DrawerTitle({ className, ...props }: React.ComponentProps<typeof DialogPrimitive.Title>) {
   return (
     <DialogPrimitive.Title
       data-slot="drawer-title"

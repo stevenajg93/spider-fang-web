@@ -1,7 +1,7 @@
-import { describe, it, expect } from "vitest"
+import { chat } from "@/lib/adapters/ai-adapter"
 import { createConsultationEvent, getAvailableSlots } from "@/lib/adapters/calendar-adapter"
 import { createCheckoutSession } from "@/lib/adapters/payments-adapter"
-import { chat } from "@/lib/adapters/ai-adapter"
+import { describe, it, expect } from "vitest"
 
 describe("Adapters (Demo Mode)", () => {
   describe("Calendar Adapter", () => {
@@ -51,18 +51,24 @@ describe("Adapters (Demo Mode)", () => {
 
   describe("AI Adapter", () => {
     it("should return demo response", async () => {
-      const response = await chat([{ role: "user", content: "What are your prices?", timestamp: Date.now() }], {
-        mode: "quick",
-      })
+      const response = await chat(
+        [{ role: "user", content: "What are your prices?", timestamp: Date.now() }],
+        {
+          mode: "quick",
+        },
+      )
 
       expect(typeof response).toBe("string")
       expect(response).toContain("Demo mode")
     })
 
     it("should handle pricing questions", async () => {
-      const response = await chat([{ role: "user", content: "How much does a website cost?", timestamp: Date.now() }], {
-        mode: "scope",
-      })
+      const response = await chat(
+        [{ role: "user", content: "How much does a website cost?", timestamp: Date.now() }],
+        {
+          mode: "scope",
+        },
+      )
 
       expect(response).toContain("£500")
       expect(response).toContain("packages")

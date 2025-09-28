@@ -1,8 +1,9 @@
 "use client"
 
+import * as React from "react"
+
 import { motion } from "framer-motion"
 import { ChevronDown } from "lucide-react"
-import * as React from "react"
 
 const faqs = [
   {
@@ -32,9 +33,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
         className="flex w-full items-center justify-between text-left"
       >
         <span className="font-medium">{q}</span>
-        <ChevronDown
-          className={`h-5 w-5 transition-transform ${open ? "rotate-180" : ""}`}
-        />
+        <ChevronDown className={`h-5 w-5 transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
       {open && <p className="mt-2 text-sm text-muted-foreground">{a}</p>}
     </div>
@@ -55,9 +54,7 @@ export default function FAQ() {
           <h2 className="text-3xl font-bold tracking-tight md:text-5xl">
             Frequently Asked Questions
           </h2>
-          <p className="mt-3 text-muted-foreground md:text-lg">
-            Straight answers. No fine print.
-          </p>
+          <p className="mt-3 text-muted-foreground md:text-lg">Straight answers. No fine print.</p>
         </motion.div>
 
         <div className="mt-10">

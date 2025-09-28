@@ -30,29 +30,33 @@ const testimonials = [
 
 export function TestimonialsSection() {
   return (
-    <section className="py-20 bg-gray-900/30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="font-bebas text-4xl sm:text-5xl text-white mb-4 tracking-wide">What Clients Say</h2>
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto">Real feedback from real businesses</p>
+    <section className="bg-gray-900/30 py-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-16 text-center">
+          <h2 className="font-bebas mb-4 text-4xl tracking-wide text-white sm:text-5xl">
+            What Clients Say
+          </h2>
+          <p className="mx-auto max-w-2xl text-xl text-gray-400">
+            Real feedback from real businesses
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           {testimonials.map((testimonial, index) => (
             <Card
               key={index}
-              className="bg-black/50 border-red-900/20 hover:border-red-600/50 transition-all duration-300 stagger-item glossy"
+              className="stagger-item glossy border-red-900/20 bg-black/50 transition-all duration-300 hover:border-red-600/50"
             >
               <CardContent className="p-6">
-                <div className="flex items-center mb-4">
+                <div className="mb-4 flex items-center">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-red-400 fill-current" />
+                    <Star key={i} className="h-5 w-5 fill-current text-red-400" />
                   ))}
                 </div>
-                <p className="text-gray-300 mb-6 leading-relaxed">"{testimonial.content}"</p>
+                <p className="mb-6 leading-relaxed text-gray-300">"{testimonial.content}"</p>
                 <div className="border-t border-gray-800 pt-4">
-                  <p className="text-white font-semibold">{testimonial.name}</p>
-                  <p className="text-gray-400 text-sm">
+                  <p className="font-semibold text-white">{testimonial.name}</p>
+                  <p className="text-sm text-gray-400">
                     {testimonial.role}, {testimonial.company}
                   </p>
                 </div>

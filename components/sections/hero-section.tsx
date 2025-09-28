@@ -1,33 +1,35 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { BRAND } from "@/lib/config"
 import { useBookingDialog } from "@/hooks/use-booking-dialog"
+import { BRAND } from "@/lib/config"
 
 export function HeroSection() {
   const { openDialog } = useBookingDialog()
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
       {/* Spider Web Background */}
-      <div className="absolute inset-0 spider-web-bg" />
+      <div className="spider-web-bg absolute inset-0" />
 
       {/* Content */}
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="relative z-10 mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
         <div className="stagger-item">
-          <h1 className="font-bebas text-6xl sm:text-7xl lg:text-8xl text-white mb-6 tracking-wide">{BRAND.tagline}</h1>
+          <h1 className="font-bebas mb-6 text-6xl tracking-wide text-white sm:text-7xl lg:text-8xl">
+            {BRAND.tagline}
+          </h1>
         </div>
 
         <div className="stagger-item">
-          <p className="text-xl sm:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
+          <p className="mx-auto mb-8 max-w-2xl text-xl leading-relaxed text-gray-300 sm:text-2xl">
             {BRAND.subhead} High-conversion websites for ambitious businesses.
           </p>
         </div>
 
-        <div className="stagger-item flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <div className="stagger-item flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Button
             size="lg"
-            className="bg-red-600 hover:bg-red-700 text-white font-semibold px-8 py-4 text-lg rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+            className="rounded-2xl bg-red-600 px-8 py-4 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:bg-red-700 hover:shadow-xl"
             onClick={openDialog}
           >
             Book Consultation
@@ -35,15 +37,17 @@ export function HeroSection() {
           <Button
             size="lg"
             variant="outline"
-            className="border-red-600 text-red-400 hover:bg-red-600 hover:text-white font-semibold px-8 py-4 text-lg rounded-2xl transition-all duration-300 bg-transparent"
-            onClick={() => document.getElementById("portfolio")?.scrollIntoView({ behavior: "smooth" })}
+            className="rounded-2xl border-red-600 bg-transparent px-8 py-4 text-lg font-semibold text-red-400 transition-all duration-300 hover:bg-red-600 hover:text-white"
+            onClick={() =>
+              document.getElementById("portfolio")?.scrollIntoView({ behavior: "smooth" })
+            }
           >
             See Work
           </Button>
         </div>
 
         <div className="stagger-item mt-12">
-          <p className="text-sm text-gray-500 uppercase tracking-wider">{BRAND.pricingStrap}</p>
+          <p className="text-sm uppercase tracking-wider text-gray-500">{BRAND.pricingStrap}</p>
         </div>
       </div>
 

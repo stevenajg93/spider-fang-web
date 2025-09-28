@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+
 import { motion } from "framer-motion"
 
 export default function Nav() {
@@ -11,20 +12,20 @@ export default function Nav() {
           {/* Fang mark */}
           <span className="relative inline-flex h-8 w-8 items-center justify-center rounded-md bg-white/5 ring-1 ring-white/10">
             <span className="absolute h-3.5 w-3.5 rounded-full bg-[hsl(var(--primary))] opacity-90"></span>
-            <span className="absolute inset-0 rounded-md ring-1 ring-[hsl(var(--primary)/.4)] group-hover:ring-[hsl(var(--primary)/.7)] transition" />
+            <span className="absolute inset-0 rounded-md ring-1 ring-[hsl(var(--primary)/.4)] transition group-hover:ring-[hsl(var(--primary)/.7)]" />
           </span>
 
           {/* Brand */}
           <div className="leading-tight">
             <motion.div
-              className="text-[15px] font-bold tracking-wide uppercase"
+              className="text-[15px] font-bold uppercase tracking-wide"
               initial={{ opacity: 0, y: -6 }}
               animate={{ opacity: 1, y: 0 }}
             >
               SPIDER FANG
             </motion.div>
             <motion.div
-              className="text-[10px] tracking-[0.22em] text-muted-foreground uppercase"
+              className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground"
               initial={{ opacity: 0, y: -6 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
@@ -35,14 +36,18 @@ export default function Nav() {
         </Link>
 
         <nav className="hidden gap-6 text-sm text-muted-foreground md:flex">
-          <Link href="#free-design" className="hover:text-foreground transition">Free Design</Link>
-          <Link href="#why-it-works" className="hover:text-foreground transition">Why It Works</Link>
-          <Link href="#packages" className="hover:text-foreground transition">Packages</Link>
+          <Link href="#free-design" className="transition hover:text-foreground">
+            Free Design
+          </Link>
+          <Link href="#why-it-works" className="transition hover:text-foreground">
+            Why It Works
+          </Link>
+          <Link href="#packages" className="transition hover:text-foreground">
+            Packages
+          </Link>
         </nav>
 
-        <div className="text-xs text-muted-foreground md:text-sm">
-          DEMO MODE
-        </div>
+        <div className="text-xs text-muted-foreground md:text-sm">DEMO MODE</div>
       </div>
     </header>
   )

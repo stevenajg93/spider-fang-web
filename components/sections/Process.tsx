@@ -23,15 +23,13 @@ export default function Process() {
     <section className="border-t bg-background">
       <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
         <motion.div
-          className="text-center max-w-2xl mx-auto"
+          className="mx-auto max-w-2xl text-center"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl font-bold tracking-tight md:text-5xl">
-            How it works
-          </h2>
+          <h2 className="text-3xl font-bold tracking-tight md:text-5xl">How it works</h2>
           <p className="mt-3 text-muted-foreground md:text-lg">
             Three simple steps. Zero risk. Keep the £500 design regardless.
           </p>

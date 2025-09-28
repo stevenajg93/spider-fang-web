@@ -1,4 +1,5 @@
 import type React from "react"
+
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -7,10 +8,6 @@ export const metadata: Metadata = {
   robots: "noindex, nofollow", // Prevent search engine indexing
 }
 
-export default function AdminLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return children
 }

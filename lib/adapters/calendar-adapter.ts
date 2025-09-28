@@ -21,7 +21,9 @@ export interface ConsultationRequest {
   company?: string
 }
 
-export async function createConsultationEvent(request: ConsultationRequest): Promise<ConsultationEvent> {
+export async function createConsultationEvent(
+  request: ConsultationRequest,
+): Promise<ConsultationEvent> {
   if (DEMO) {
     // Demo mode - return mock data
     await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate API delay
@@ -43,16 +45,52 @@ export async function getAvailableSlots(date: string): Promise<TimeSlot[]> {
     const baseDate = new Date(date)
     return [
       {
-        start: new Date(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate(), 9, 0).toISOString(),
-        end: new Date(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate(), 10, 0).toISOString(),
+        start: new Date(
+          baseDate.getFullYear(),
+          baseDate.getMonth(),
+          baseDate.getDate(),
+          9,
+          0,
+        ).toISOString(),
+        end: new Date(
+          baseDate.getFullYear(),
+          baseDate.getMonth(),
+          baseDate.getDate(),
+          10,
+          0,
+        ).toISOString(),
       },
       {
-        start: new Date(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate(), 14, 0).toISOString(),
-        end: new Date(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate(), 15, 0).toISOString(),
+        start: new Date(
+          baseDate.getFullYear(),
+          baseDate.getMonth(),
+          baseDate.getDate(),
+          14,
+          0,
+        ).toISOString(),
+        end: new Date(
+          baseDate.getFullYear(),
+          baseDate.getMonth(),
+          baseDate.getDate(),
+          15,
+          0,
+        ).toISOString(),
       },
       {
-        start: new Date(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate(), 16, 0).toISOString(),
-        end: new Date(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate(), 17, 0).toISOString(),
+        start: new Date(
+          baseDate.getFullYear(),
+          baseDate.getMonth(),
+          baseDate.getDate(),
+          16,
+          0,
+        ).toISOString(),
+        end: new Date(
+          baseDate.getFullYear(),
+          baseDate.getMonth(),
+          baseDate.getDate(),
+          17,
+          0,
+        ).toISOString(),
       },
     ]
   }

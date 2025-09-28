@@ -1,20 +1,27 @@
 "use client"
 
 import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Calendar, Clock, User, Target } from "lucide-react"
-import { createConsultationEvent, getAvailableSlots } from "@/lib/adapters/calendar-adapter"
 import { useToast } from "@/hooks/use-toast"
+import { createConsultationEvent, getAvailableSlots } from "@/lib/adapters/calendar-adapter"
 import { WORKING_HOURS } from "@/lib/config"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Calendar, Clock, User, Target } from "lucide-react"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
 
 const bookingSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -65,7 +72,9 @@ export function BookingDialog({ open, onOpenChange }: BookingDialogProps) {
   const [availableSlots, setAvailableSlots] = useState<string[]>([])
   const [selectedSlot, setSelectedSlot] = useState<string>("")
   const [isLoading, setIsLoading] = useState(false)
-  const [bookingResult, setBookingResult] = useState<{ meetLink: string; htmlLink: string } | null>(null)
+  const [bookingResult, setBookingResult] = useState<{ meetLink: string; htmlLink: string } | null>(
+    null,
+  )
   const { toast } = useToast()
 
   const form = useForm<BookingFormData>({
@@ -186,9 +195,9 @@ export function BookingDialog({ open, onOpenChange }: BookingDialogProps) {
         }
       }}
     >
-      <DialogContent className="sm:max-w-[600px] bg-black border-red-900/20 text-white max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-h-[90vh] overflow-y-auto border-red-900/20 bg-black text-white sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle className="font-bebas text-2xl tracking-wide text-center">
+          <DialogTitle className="font-bebas text-center text-2xl tracking-wide">
             {step === "form" && "Book Your Free Consultation"}
             {step === "slots" && "Choose Your Time Slot"}
             {step === "success" && "Consultation Booked!"}
@@ -199,21 +208,23 @@ export function BookingDialog({ open, onOpenChange }: BookingDialogProps) {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             {/* Personal Information */}
             <div className="space-y-4">
-              <h3 className="font-semibold text-red-400 flex items-center">
-                <User className="w-4 h-4 mr-2" />
+              <h3 className="flex items-center font-semibold text-red-400">
+                <User className="mr-2 h-4 w-4" />
                 Personal Information
               </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
                   <Label htmlFor="name">Name *</Label>
                   <Input
                     id="name"
                     {...form.register("name")}
-                    className="bg-gray-900 border-gray-700 text-white"
+                    className="border-gray-700 bg-gray-900 text-white"
                     placeholder="Your full name"
                   />
                   {form.formState.errors.name && (
-                    <p className="text-red-400 text-sm mt-1">{form.formState.errors.name.message}</p>
+                    <p className="mt-1 text-sm text-red-400">
+                      {form.formState.errors.name.message}
+                    </p>
                   )}
                 </div>
                 <div>
@@ -222,21 +233,23 @@ export function BookingDialog({ open, onOpenChange }: BookingDialogProps) {
                     id="email"
                     type="email"
                     {...form.register("email")}
-                    className="bg-gray-900 border-gray-700 text-white"
+                    className="border-gray-700 bg-gray-900 text-white"
                     placeholder="your@email.com"
                   />
                   {form.formState.errors.email && (
-                    <p className="text-red-400 text-sm mt-1">{form.formState.errors.email.message}</p>
+                    <p className="mt-1 text-sm text-red-400">
+                      {form.formState.errors.email.message}
+                    </p>
                   )}
                 </div>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
                   <Label htmlFor="company">Company</Label>
                   <Input
                     id="company"
                     {...form.register("company")}
-                    className="bg-gray-900 border-gray-700 text-white"
+                    className="border-gray-700 bg-gray-900 text-white"
                     placeholder="Your company name"
                   />
                 </div>
@@ -245,7 +258,7 @@ export function BookingDialog({ open, onOpenChange }: BookingDialogProps) {
                   <Input
                     id="phone"
                     {...form.register("phone")}
-                    className="bg-gray-900 border-gray-700 text-white"
+                    className="border-gray-700 bg-gray-900 text-white"
                     placeholder="Your phone number"
                   />
                 </div>
@@ -254,18 +267,18 @@ export function BookingDialog({ open, onOpenChange }: BookingDialogProps) {
 
             {/* Project Information */}
             <div className="space-y-4">
-              <h3 className="font-semibold text-red-400 flex items-center">
-                <Target className="w-4 h-4 mr-2" />
+              <h3 className="flex items-center font-semibold text-red-400">
+                <Target className="mr-2 h-4 w-4" />
                 Project Information
               </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
                   <Label htmlFor="budget">Budget Range *</Label>
                   <Select onValueChange={(value) => form.setValue("budget", value)}>
-                    <SelectTrigger className="bg-gray-900 border-gray-700 text-white">
+                    <SelectTrigger className="border-gray-700 bg-gray-900 text-white">
                       <SelectValue placeholder="Select budget range" />
                     </SelectTrigger>
-                    <SelectContent className="bg-gray-900 border-gray-700">
+                    <SelectContent className="border-gray-700 bg-gray-900">
                       {budgetOptions.map((option) => (
                         <SelectItem key={option.value} value={option.value} className="text-white">
                           {option.label}
@@ -274,16 +287,18 @@ export function BookingDialog({ open, onOpenChange }: BookingDialogProps) {
                     </SelectContent>
                   </Select>
                   {form.formState.errors.budget && (
-                    <p className="text-red-400 text-sm mt-1">{form.formState.errors.budget.message}</p>
+                    <p className="mt-1 text-sm text-red-400">
+                      {form.formState.errors.budget.message}
+                    </p>
                   )}
                 </div>
                 <div>
                   <Label htmlFor="timeline">Timeline *</Label>
                   <Select onValueChange={(value) => form.setValue("timeline", value)}>
-                    <SelectTrigger className="bg-gray-900 border-gray-700 text-white">
+                    <SelectTrigger className="border-gray-700 bg-gray-900 text-white">
                       <SelectValue placeholder="Select timeline" />
                     </SelectTrigger>
-                    <SelectContent className="bg-gray-900 border-gray-700">
+                    <SelectContent className="border-gray-700 bg-gray-900">
                       {timelineOptions.map((option) => (
                         <SelectItem key={option.value} value={option.value} className="text-white">
                           {option.label}
@@ -292,19 +307,23 @@ export function BookingDialog({ open, onOpenChange }: BookingDialogProps) {
                     </SelectContent>
                   </Select>
                   {form.formState.errors.timeline && (
-                    <p className="text-red-400 text-sm mt-1">{form.formState.errors.timeline.message}</p>
+                    <p className="mt-1 text-sm text-red-400">
+                      {form.formState.errors.timeline.message}
+                    </p>
                   )}
                 </div>
               </div>
 
               <div>
                 <Label>Services Needed *</Label>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
+                <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
                   {serviceOptions.map((service) => (
                     <div key={service.value} className="flex items-center space-x-2">
                       <Checkbox
                         id={service.value}
-                        onCheckedChange={(checked) => handleServiceChange(service.value, checked as boolean)}
+                        onCheckedChange={(checked) =>
+                          handleServiceChange(service.value, checked as boolean)
+                        }
                         className="border-gray-700"
                       />
                       <Label htmlFor={service.value} className="text-sm">
@@ -314,7 +333,9 @@ export function BookingDialog({ open, onOpenChange }: BookingDialogProps) {
                   ))}
                 </div>
                 {form.formState.errors.services && (
-                  <p className="text-red-400 text-sm mt-1">{form.formState.errors.services.message}</p>
+                  <p className="mt-1 text-sm text-red-400">
+                    {form.formState.errors.services.message}
+                  </p>
                 )}
               </div>
 
@@ -323,7 +344,7 @@ export function BookingDialog({ open, onOpenChange }: BookingDialogProps) {
                 <Textarea
                   id="goals"
                   {...form.register("goals")}
-                  className="bg-gray-900 border-gray-700 text-white"
+                  className="border-gray-700 bg-gray-900 text-white"
                   placeholder="Tell us about your project goals, challenges, or any specific requirements..."
                   rows={3}
                 />
@@ -332,8 +353,8 @@ export function BookingDialog({ open, onOpenChange }: BookingDialogProps) {
 
             {/* Optional Scheduling */}
             <div className="space-y-4">
-              <h3 className="font-semibold text-red-400 flex items-center">
-                <Calendar className="w-4 h-4 mr-2" />
+              <h3 className="flex items-center font-semibold text-red-400">
+                <Calendar className="mr-2 h-4 w-4" />
                 Schedule Consultation (Optional)
               </h3>
               <div>
@@ -343,17 +364,17 @@ export function BookingDialog({ open, onOpenChange }: BookingDialogProps) {
                   type="date"
                   {...form.register("preferredDate")}
                   onChange={(e) => handleDateChange(e.target.value)}
-                  className="bg-gray-900 border-gray-700 text-white"
+                  className="border-gray-700 bg-gray-900 text-white"
                   min={new Date().toISOString().split("T")[0]}
                 />
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex flex-col gap-3 sm:flex-row">
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="bg-red-600 hover:bg-red-700 text-white font-semibold flex-1"
+                className="flex-1 bg-red-600 font-semibold text-white hover:bg-red-700"
               >
                 {isLoading ? "Submitting..." : "Submit Request"}
               </Button>
@@ -362,7 +383,7 @@ export function BookingDialog({ open, onOpenChange }: BookingDialogProps) {
                   type="button"
                   onClick={proceedToSlots}
                   variant="outline"
-                  className="border-red-600 text-red-400 hover:bg-red-600 hover:text-white bg-transparent"
+                  className="border-red-600 bg-transparent text-red-400 hover:bg-red-600 hover:text-white"
                 >
                   Choose Time Slot
                 </Button>
@@ -380,44 +401,44 @@ export function BookingDialog({ open, onOpenChange }: BookingDialogProps) {
             </div>
 
             {availableSlots.length > 0 ? (
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                 {availableSlots.map((time) => (
                   <Button
                     key={time}
                     variant={selectedSlot.includes(time) ? "default" : "outline"}
                     className={
                       selectedSlot.includes(time)
-                        ? "bg-red-600 hover:bg-red-700 text-white"
-                        : "border-gray-700 text-gray-300 hover:border-red-600 hover:text-red-400 bg-transparent"
+                        ? "bg-red-600 text-white hover:bg-red-700"
+                        : "border-gray-700 bg-transparent text-gray-300 hover:border-red-600 hover:text-red-400"
                     }
                     onClick={() => selectSlot(form.getValues("preferredDate")!, time)}
                   >
-                    <Clock className="w-4 h-4 mr-2" />
+                    <Clock className="mr-2 h-4 w-4" />
                     {time}
                   </Button>
                 ))}
               </div>
             ) : (
-              <div className="text-center py-8">
+              <div className="py-8 text-center">
                 <p className="text-gray-400">No available slots for this date.</p>
-                <p className="text-sm text-gray-500 mt-2">
+                <p className="mt-2 text-sm text-gray-500">
                   Please choose a different date or submit without scheduling.
                 </p>
               </div>
             )}
 
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex flex-col gap-3 sm:flex-row">
               <Button
                 onClick={() => setStep("form")}
                 variant="outline"
-                className="border-gray-700 text-gray-300 hover:border-red-600 hover:text-red-400 bg-transparent"
+                className="border-gray-700 bg-transparent text-gray-300 hover:border-red-600 hover:text-red-400"
               >
                 Back to Form
               </Button>
               <Button
                 onClick={form.handleSubmit(onSubmit)}
                 disabled={isLoading || !selectedSlot}
-                className="bg-red-600 hover:bg-red-700 text-white font-semibold flex-1"
+                className="flex-1 bg-red-600 font-semibold text-white hover:bg-red-700"
               >
                 {isLoading ? "Booking..." : "Confirm Booking"}
               </Button>
@@ -427,27 +448,30 @@ export function BookingDialog({ open, onOpenChange }: BookingDialogProps) {
 
         {step === "success" && bookingResult && (
           <div className="space-y-6 text-center">
-            <div className="w-16 h-16 bg-red-600/20 rounded-full flex items-center justify-center mx-auto">
-              <Calendar className="w-8 h-8 text-red-400" />
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-red-600/20">
+              <Calendar className="h-8 w-8 text-red-400" />
             </div>
             <div>
-              <h3 className="text-xl font-semibold text-white mb-2">Consultation Booked Successfully!</h3>
+              <h3 className="mb-2 text-xl font-semibold text-white">
+                Consultation Booked Successfully!
+              </h3>
               <p className="text-gray-400">
-                We've sent you a confirmation email with all the details. Looking forward to discussing your project!
+                We've sent you a confirmation email with all the details. Looking forward to
+                discussing your project!
               </p>
             </div>
-            <div className="bg-gray-900/50 rounded-lg p-4 space-y-3">
+            <div className="space-y-3 rounded-lg bg-gray-900/50 p-4">
               <div className="flex items-center justify-center space-x-4">
                 <Button
                   onClick={() => window.open(bookingResult.meetLink, "_blank")}
-                  className="bg-red-600 hover:bg-red-700 text-white"
+                  className="bg-red-600 text-white hover:bg-red-700"
                 >
                   Join Meeting
                 </Button>
                 <Button
                   onClick={() => window.open(bookingResult.htmlLink, "_blank")}
                   variant="outline"
-                  className="border-red-600 text-red-400 hover:bg-red-600 hover:text-white bg-transparent"
+                  className="border-red-600 bg-transparent text-red-400 hover:bg-red-600 hover:text-white"
                 >
                   Add to Calendar
                 </Button>
@@ -456,7 +480,7 @@ export function BookingDialog({ open, onOpenChange }: BookingDialogProps) {
             <Button
               onClick={() => onOpenChange(false)}
               variant="outline"
-              className="border-gray-700 text-gray-300 hover:border-red-600 hover:text-red-400 bg-transparent"
+              className="border-gray-700 bg-transparent text-gray-300 hover:border-red-600 hover:text-red-400"
             >
               Close
             </Button>

@@ -1,14 +1,16 @@
 "use client"
 
 import * as React from "react"
+
 import { useRouter } from "next/navigation"
-import { motion } from "framer-motion"
+
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
 import { Card, CardContent } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/components/ui/use-toast"
+import { motion } from "framer-motion"
 
 type FormValues = {
   name: string
@@ -18,9 +20,20 @@ type FormValues = {
 }
 
 const ACCEPT = [
-  ".png",".jpg",".jpeg",".webp",".gif",
-  ".pdf",".doc",".docx",".ppt",".pptx",".key",
-  ".sketch",".fig",".zip"
+  ".png",
+  ".jpg",
+  ".jpeg",
+  ".webp",
+  ".gif",
+  ".pdf",
+  ".doc",
+  ".docx",
+  ".ppt",
+  ".pptx",
+  ".key",
+  ".sketch",
+  ".fig",
+  ".zip",
 ].join(",")
 
 const MAX_FILES = 10
@@ -75,9 +88,15 @@ export default function FreeDesignForm() {
   }
 
   return (
-    <section id="free-design" className="relative scroll-mt-24 md:scroll-mt-28 border-t bg-background">
-      <div aria-hidden className="absolute inset-0 bg-[radial-gradient(800px_400px_at_70%_-10%,hsl(var(--primary)/.18),transparent_60%)]" />
-      <div className="relative mx-auto max-w-4xl px-4 sm:px-6 py-16 sm:py-20 md:py-24">
+    <section
+      id="free-design"
+      className="relative scroll-mt-24 border-t bg-transparent md:scroll-mt-28"
+    >
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-[radial-gradient(800px_400px_at_70%_-10%,hsl(var(--primary)/.18),transparent_60%)]"
+      />
+      <div className="relative mx-auto max-w-4xl px-4 py-16 sm:px-6 sm:py-20 md:py-24">
         <motion.div
           className="text-center"
           initial={{ opacity: 0, y: 30 }}
@@ -167,7 +186,8 @@ export default function FreeDesignForm() {
                     onChange={(e) => onFilesSelected(e.target.files)}
                   />
                   <p className="text-xs text-muted-foreground">
-                    Up to {MAX_FILES} files • {MAX_MB}MB each • Accepted: {ACCEPT.replace(/\./g, ".")}
+                    Up to {MAX_FILES} files • {MAX_MB}MB each • Accepted:{" "}
+                    {ACCEPT.replace(/\./g, ".")}
                   </p>
 
                   {!!files.length && (
@@ -175,7 +195,7 @@ export default function FreeDesignForm() {
                       {files.map((f) => (
                         <li
                           key={f.name}
-                          className="flex items-center justify-between rounded-md border border-white/10 bg-background/40 px-3 py-2"
+                          className="flex items-center justify-between rounded-md border border-white/10 bg-transparent/40 px-3 py-2"
                         >
                           <span className="truncate">{f.name}</span>
                           <button
@@ -192,7 +212,12 @@ export default function FreeDesignForm() {
                 </div>
 
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                  <Button type="submit" size="lg" disabled={loading} className="h-12 w-full sm:w-auto">
+                  <Button
+                    type="submit"
+                    size="lg"
+                    disabled={loading}
+                    className="h-12 w-full sm:w-auto"
+                  >
                     {loading ? "Submitting..." : "Send & Book Kickoff Call"}
                   </Button>
                   <p className="text-center text-xs text-muted-foreground sm:text-sm">

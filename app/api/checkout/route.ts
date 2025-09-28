@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+
 import { createCheckoutSession } from "@/lib/adapters/payments-adapter"
 
 export async function POST(request: NextRequest) {

@@ -10,10 +10,10 @@ export const packages = [
       "Mobile-first design",
       "Basic SEO setup",
       "Contact form integration",
-      "1 month support"
+      "1 month support",
     ],
     popular: false,
-    priceKey: "strike_package"
+    priceKey: "strike_package",
   },
   {
     id: "venom",
@@ -27,10 +27,10 @@ export const packages = [
       "Advanced SEO optimization",
       "CMS integration",
       "Analytics setup",
-      "3 months support"
+      "3 months support",
     ],
     popular: true,
-    priceKey: "venom_package"
+    priceKey: "venom_package",
   },
   {
     id: "web",
@@ -45,9 +45,9 @@ export const packages = [
       "Advanced analytics",
       "Performance optimization",
       "6 months support",
-      "Priority support"
+      "Priority support",
     ],
     popular: false,
-    priceKey: "web_package"
-  }
-] as const;
+    priceKey: "web_package",
+  },
+] as const

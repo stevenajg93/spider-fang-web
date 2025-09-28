@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+
 import { chat, type ChatMessage, type ChatContext } from "@/lib/adapters/ai-adapter"
 
 export async function POST(request: NextRequest) {

@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useParams } from "next/navigation"
+
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
 
@@ -33,7 +34,7 @@ const PACKAGE_COPY: Record<string, { title: string; price: string; points: strin
       "Fast, secure, easy to update",
     ],
   },
-  "custom": {
+  custom: {
     title: "Custom Applications",
     price: "Bespoke",
     points: [

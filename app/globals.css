@@ -40,7 +40,9 @@
   }
 
   /* Base element styles (theme-aware) */
-  * { border-color: hsl(var(--border)); }
+  * {
+    border-color: hsl(var(--border));
+  }
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
@@ -64,13 +66,17 @@
     inset: -50%;
     pointer-events: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.7' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='table' tableValues='0 0 0 0 0 0 .08 .12 .1' /%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    opacity: .06;
+    opacity: 0.06;
     mix-blend-mode: soft-light;
   }
   .sf-radial {
-    background: radial-gradient(800px 400px at 70% -10%, hsl(var(--primary) / .22), transparent 60%);
+    background: radial-gradient(
+      800px 400px at 70% -10%,
+      hsl(var(--primary) / 0.22),
+      transparent 60%
+    );
   }
   .sf-vignette {
-    mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 80%, rgba(0,0,0,0));
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 80%, rgba(0, 0, 0, 0));
   }
 }

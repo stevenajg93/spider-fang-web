@@ -3,8 +3,8 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { packages } from "@/data/pricing"
-import { createCheckoutSession } from "@/lib/adapters/payments-adapter"
 import { useToast } from "@/hooks/use-toast"
+import { createCheckoutSession } from "@/lib/adapters/payments-adapter"
 
 export function PricingTeaser() {
   const { toast } = useToast()
@@ -27,46 +27,57 @@ export function PricingTeaser() {
   }
 
   return (
-    <section className="py-20 bg-black">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="font-bebas text-4xl sm:text-5xl text-white mb-4 tracking-wide">Launch from £500</h2>
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto">Choose the perfect package for your business</p>
+    <section className="bg-black py-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-16 text-center">
+          <h2 className="font-bebas mb-4 text-4xl tracking-wide text-white sm:text-5xl">
+            Launch from £500
+          </h2>
+          <p className="mx-auto max-w-2xl text-xl text-gray-400">
+            Choose the perfect package for your business
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <div className="mb-12 grid grid-cols-1 gap-8 md:grid-cols-3">
           {packages.map((pkg, index) => (
             <Card
               key={pkg.id}
-              className={`bg-gray-900/50 border-red-900/20 hover:border-red-600/50 transition-all duration-300 stagger-item ${
-                pkg.popular ? "ring-2 ring-red-600/50 scale-105" : ""
+              className={`stagger-item border-red-900/20 bg-gray-900/50 transition-all duration-300 hover:border-red-600/50 ${
+                pkg.popular ? "scale-105 ring-2 ring-red-600/50" : ""
               }`}
             >
               <CardContent className="p-6 text-center">
                 {pkg.popular && (
-                  <div className="bg-red-600 text-white text-sm font-semibold px-3 py-1 rounded-full mb-4 inline-block">
+                  <div className="mb-4 inline-block rounded-full bg-red-600 px-3 py-1 text-sm font-semibold text-white">
                     Most Popular
                   </div>
                 )}
-                <h3 className="font-bebas text-2xl text-white mb-2 tracking-wide">{pkg.name}</h3>
+                <h3 className="font-bebas mb-2 text-2xl tracking-wide text-white">{pkg.name}</h3>
                 <div className="mb-4">
-                  <span className="text-3xl font-bold text-red-400">£{pkg.price.toLocaleString()}</span>
+                  <span className="text-3xl font-bold text-red-400">
+                    £{pkg.price.toLocaleString()}
+                  </span>
                   <span className="text-gray-500">+</span>
                 </div>
-                <p className="text-gray-400 text-sm mb-6">{pkg.description}</p>
-                <ul className="space-y-2 mb-6">
+                <p className="mb-6 text-sm text-gray-400">{pkg.description}</p>
+                <ul className="mb-6 space-y-2">
                   {pkg.features.slice(0, 3).map((feature, idx) => (
-                    <li key={idx} className="text-sm text-gray-300 flex items-center justify-center">
-                      <span className="w-1 h-1 bg-red-400 rounded-full mr-2" />
+                    <li
+                      key={idx}
+                      className="flex items-center justify-center text-sm text-gray-300"
+                    >
+                      <span className="mr-2 h-1 w-1 rounded-full bg-red-400" />
                       {feature}
                     </li>
                   ))}
                   {pkg.features.length > 3 && (
-                    <li className="text-sm text-gray-500">+{pkg.features.length - 3} more features</li>
+                    <li className="text-sm text-gray-500">
+                      +{pkg.features.length - 3} more features
+                    </li>
                   )}
                 </ul>
                 <Button
-                  className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold mb-2"
+                  className="mb-2 w-full bg-red-600 font-semibold text-white hover:bg-red-700"
                   onClick={() => handleQuickPurchase(pkg.id, pkg.priceKey)}
                 >
                   Buy Now
@@ -79,7 +90,7 @@ export function PricingTeaser() {
         <div className="text-center">
           <Button
             size="lg"
-            className="bg-red-600 hover:bg-red-700 text-white font-semibold px-8 py-4 text-lg rounded-2xl"
+            className="rounded-2xl bg-red-600 px-8 py-4 text-lg font-semibold text-white hover:bg-red-700"
             onClick={() => (window.location.href = "/services")}
           >
             Compare Packages

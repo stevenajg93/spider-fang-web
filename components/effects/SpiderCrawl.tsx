@@ -1,7 +1,8 @@
 "use client"
 
-import { motion } from "framer-motion"
 import React from "react"
+
+import { motion } from "framer-motion"
 
 /**
  * Fierce spider silhouette with red glowing fangs that crawls diagonally across the hero.
@@ -21,7 +22,7 @@ export default function SpiderCrawl() {
       opacity: [0, 1, 1],
       transition: {
         times: [0, 0.55, 1],
-        duration: 45,         // cinematic pace
+        duration: 45, // cinematic pace
         ease: "easeInOut",
         repeat: Infinity,
         repeatDelay: 6,
@@ -39,11 +40,7 @@ export default function SpiderCrawl() {
   }
 
   return (
-    <motion.div
-      className="pointer-events-none absolute left-0 top-0 z-20"
-      aria-hidden
-      {...crawl}
-    >
+    <motion.div className="pointer-events-none absolute left-0 top-0 z-20" aria-hidden {...crawl}>
       <motion.svg
         width="180"
         height="180"

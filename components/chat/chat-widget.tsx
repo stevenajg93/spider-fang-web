@@ -1,16 +1,27 @@
 "use client"
 
 import type React from "react"
-
 import { useState, useRef, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
+
 import { Badge } from "@/components/ui/badge"
-import { MessageCircle, X, Send, User, Bot, Calendar, Package, CreditCard, Minimize2, Maximize2 } from "lucide-react"
-import { chat, type ChatMessage } from "@/lib/adapters/ai-adapter"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
 import { useBookingDialog } from "@/hooks/use-booking-dialog"
 import { useToast } from "@/hooks/use-toast"
+import { chat, type ChatMessage } from "@/lib/adapters/ai-adapter"
+import {
+  MessageCircle,
+  X,
+  Send,
+  User,
+  Bot,
+  Calendar,
+  Package,
+  CreditCard,
+  Minimize2,
+  Maximize2,
+} from "lucide-react"
 
 interface ChatWidgetProps {
   className?: string
@@ -84,7 +95,8 @@ export function ChatWidget({ className }: ChatWidgetProps) {
       setMessages([
         {
           role: "assistant",
-          content: "Hi! I'm here to help with questions about Spider Fang's web services. What would you like to know?",
+          content:
+            "Hi! I'm here to help with questions about Spider Fang's web services. What would you like to know?",
         },
       ])
     }
@@ -181,10 +193,10 @@ export function ChatWidget({ className }: ChatWidgetProps) {
       <div className={`fixed bottom-6 right-6 z-50 ${className}`}>
         <Button
           onClick={() => setIsOpen(true)}
-          className="w-14 h-14 rounded-full bg-red-600 hover:bg-red-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 animate-pulse"
+          className="h-14 w-14 animate-pulse rounded-full bg-red-600 text-white shadow-lg transition-all duration-300 hover:bg-red-700 hover:shadow-xl"
           aria-label="Open chat"
         >
-          <MessageCircle className="w-6 h-6" />
+          <MessageCircle className="h-6 w-6" />
         </Button>
       </div>
     )
@@ -193,22 +205,22 @@ export function ChatWidget({ className }: ChatWidgetProps) {
   return (
     <div className={`fixed bottom-6 right-6 z-50 ${className}`}>
       <Card
-        className={`bg-black border-red-900/20 shadow-2xl transition-all duration-300 ${
-          isMinimized ? "w-80 h-16" : "w-80 h-96"
+        className={`border-red-900/20 bg-black shadow-2xl transition-all duration-300 ${
+          isMinimized ? "h-16 w-80" : "h-96 w-80"
         }`}
       >
-        <CardHeader className="p-4 border-b border-red-900/20">
+        <CardHeader className="border-b border-red-900/20 p-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center">
-                <Bot className="w-4 h-4 text-white" />
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-red-600">
+                <Bot className="h-4 w-4 text-white" />
               </div>
               <div>
-                <h3 className="font-semibold text-white text-sm">Spider Fang AI</h3>
+                <h3 className="text-sm font-semibold text-white">Spider Fang AI</h3>
                 <div className="flex items-center space-x-2">
                   <Badge
                     variant={mode === "quick" ? "default" : "outline"}
-                    className={`text-xs cursor-pointer ${
+                    className={`cursor-pointer text-xs ${
                       mode === "quick" ? "bg-red-600 text-white" : "border-red-600 text-red-400"
                     }`}
                     onClick={() => setMode("quick")}
@@ -217,7 +229,7 @@ export function ChatWidget({ className }: ChatWidgetProps) {
                   </Badge>
                   <Badge
                     variant={mode === "scope" ? "default" : "outline"}
-                    className={`text-xs cursor-pointer ${
+                    className={`cursor-pointer text-xs ${
                       mode === "scope" ? "bg-red-600 text-white" : "border-red-600 text-red-400"
                     }`}
                     onClick={() => setMode("scope")}
@@ -232,38 +244,47 @@ export function ChatWidget({ className }: ChatWidgetProps) {
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsMinimized(!isMinimized)}
-                className="text-gray-400 hover:text-white p-1"
+                className="p-1 text-gray-400 hover:text-white"
               >
-                {isMinimized ? <Maximize2 className="w-4 h-4" /> : <Minimize2 className="w-4 h-4" />}
+                {isMinimized ? (
+                  <Maximize2 className="h-4 w-4" />
+                ) : (
+                  <Minimize2 className="h-4 w-4" />
+                )}
               </Button>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsOpen(false)}
-                className="text-gray-400 hover:text-white p-1"
+                className="p-1 text-gray-400 hover:text-white"
               >
-                <X className="w-4 h-4" />
+                <X className="h-4 w-4" />
               </Button>
             </div>
           </div>
         </CardHeader>
 
         {!isMinimized && (
-          <CardContent className="p-0 flex flex-col h-80">
+          <CardContent className="flex h-80 flex-col p-0">
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            <div className="flex-1 space-y-4 overflow-y-auto p-4">
               {messages.map((message, index) => (
-                <div key={index} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
+                <div
+                  key={index}
+                  className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
+                >
                   <div
-                    className={`max-w-[80%] p-3 rounded-lg text-sm ${
+                    className={`max-w-[80%] rounded-lg p-3 text-sm ${
                       message.role === "user"
                         ? "bg-red-600 text-white"
-                        : "bg-gray-800 text-gray-200 border border-gray-700"
+                        : "border border-gray-700 bg-gray-800 text-gray-200"
                     }`}
                   >
                     <div className="flex items-start space-x-2">
-                      {message.role === "assistant" && <Bot className="w-4 h-4 mt-0.5 flex-shrink-0" />}
-                      {message.role === "user" && <User className="w-4 h-4 mt-0.5 flex-shrink-0" />}
+                      {message.role === "assistant" && (
+                        <Bot className="mt-0.5 h-4 w-4 flex-shrink-0" />
+                      )}
+                      {message.role === "user" && <User className="mt-0.5 h-4 w-4 flex-shrink-0" />}
                       <p className="leading-relaxed">{message.content}</p>
                     </div>
                   </div>
@@ -271,17 +292,17 @@ export function ChatWidget({ className }: ChatWidgetProps) {
               ))}
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="bg-gray-800 text-gray-200 border border-gray-700 p-3 rounded-lg text-sm">
+                  <div className="rounded-lg border border-gray-700 bg-gray-800 p-3 text-sm text-gray-200">
                     <div className="flex items-center space-x-2">
-                      <Bot className="w-4 h-4" />
+                      <Bot className="h-4 w-4" />
                       <div className="flex space-x-1">
-                        <div className="w-2 h-2 bg-red-400 rounded-full animate-bounce" />
+                        <div className="h-2 w-2 animate-bounce rounded-full bg-red-400" />
                         <div
-                          className="w-2 h-2 bg-red-400 rounded-full animate-bounce"
+                          className="h-2 w-2 animate-bounce rounded-full bg-red-400"
                           style={{ animationDelay: "0.1s" }}
                         />
                         <div
-                          className="w-2 h-2 bg-red-400 rounded-full animate-bounce"
+                          className="h-2 w-2 animate-bounce rounded-full bg-red-400"
                           style={{ animationDelay: "0.2s" }}
                         />
                       </div>
@@ -293,33 +314,33 @@ export function ChatWidget({ className }: ChatWidgetProps) {
             </div>
 
             {/* Quick Actions */}
-            <div className="p-3 border-t border-gray-800">
-              <div className="flex flex-wrap gap-2 mb-3">
+            <div className="border-t border-gray-800 p-3">
+              <div className="mb-3 flex flex-wrap gap-2">
                 <Button
                   size="sm"
                   variant="outline"
-                  className="text-xs border-red-600/50 text-red-400 hover:bg-red-600/10 bg-transparent"
+                  className="border-red-600/50 bg-transparent text-xs text-red-400 hover:bg-red-600/10"
                   onClick={() => handleQuickAction("book")}
                 >
-                  <Calendar className="w-3 h-3 mr-1" />
+                  <Calendar className="mr-1 h-3 w-3" />
                   Book Call
                 </Button>
                 <Button
                   size="sm"
                   variant="outline"
-                  className="text-xs border-red-600/50 text-red-400 hover:bg-red-600/10 bg-transparent"
+                  className="border-red-600/50 bg-transparent text-xs text-red-400 hover:bg-red-600/10"
                   onClick={() => handleQuickAction("packages")}
                 >
-                  <Package className="w-3 h-3 mr-1" />
+                  <Package className="mr-1 h-3 w-3" />
                   Packages
                 </Button>
                 <Button
                   size="sm"
                   variant="outline"
-                  className="text-xs border-red-600/50 text-red-400 hover:bg-red-600/10 bg-transparent"
+                  className="border-red-600/50 bg-transparent text-xs text-red-400 hover:bg-red-600/10"
                   onClick={() => handleQuickAction("pricing")}
                 >
-                  <CreditCard className="w-3 h-3 mr-1" />
+                  <CreditCard className="mr-1 h-3 w-3" />
                   Pricing
                 </Button>
               </div>
@@ -331,15 +352,15 @@ export function ChatWidget({ className }: ChatWidgetProps) {
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Ask me anything..."
-                  className="bg-gray-900 border-gray-700 text-white text-sm"
+                  className="border-gray-700 bg-gray-900 text-sm text-white"
                   disabled={isLoading}
                 />
                 <Button
                   onClick={handleSendMessage}
                   disabled={isLoading || !inputValue.trim()}
-                  className="bg-red-600 hover:bg-red-700 text-white px-3"
+                  className="bg-red-600 px-3 text-white hover:bg-red-700"
                 >
-                  <Send className="w-4 h-4" />
+                  <Send className="h-4 w-4" />
                 </Button>
               </div>
 
@@ -349,7 +370,7 @@ export function ChatWidget({ className }: ChatWidgetProps) {
                   <Button
                     size="sm"
                     variant="outline"
-                    className="text-xs border-red-600/50 text-red-400 hover:bg-red-600/10 bg-transparent w-full"
+                    className="w-full border-red-600/50 bg-transparent text-xs text-red-400 hover:bg-red-600/10"
                     onClick={() => setShowUserForm(true)}
                   >
                     Share your details for better help
@@ -363,8 +384,8 @@ export function ChatWidget({ className }: ChatWidgetProps) {
 
       {/* User Info Form Modal */}
       {showUserForm && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <Card className="bg-black border-red-900/20 w-80 mx-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <Card className="mx-4 w-80 border-red-900/20 bg-black">
             <CardHeader className="pb-4">
               <div className="flex items-center justify-between">
                 <h3 className="font-semibold text-white">Help us help you better</h3>
@@ -372,41 +393,49 @@ export function ChatWidget({ className }: ChatWidgetProps) {
                   variant="ghost"
                   size="sm"
                   onClick={() => setShowUserForm(false)}
-                  className="text-gray-400 hover:text-white p-1"
+                  className="p-1 text-gray-400 hover:text-white"
                 >
-                  <X className="w-4 h-4" />
+                  <X className="h-4 w-4" />
                 </Button>
               </div>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleUserInfoSubmit} className="space-y-4">
                 <div>
-                  <label className="text-sm text-gray-400 mb-1 block">Name</label>
-                  <Input name="name" placeholder="Your name" className="bg-gray-900 border-gray-700 text-white" />
+                  <label className="mb-1 block text-sm text-gray-400">Name</label>
+                  <Input
+                    name="name"
+                    placeholder="Your name"
+                    className="border-gray-700 bg-gray-900 text-white"
+                  />
                 </div>
                 <div>
-                  <label className="text-sm text-gray-400 mb-1 block">Email</label>
+                  <label className="mb-1 block text-sm text-gray-400">Email</label>
                   <Input
                     name="email"
                     type="email"
                     placeholder="your@email.com"
-                    className="bg-gray-900 border-gray-700 text-white"
+                    className="border-gray-700 bg-gray-900 text-white"
                   />
                 </div>
                 <div>
-                  <label className="text-sm text-gray-400 mb-1 block">Company (optional)</label>
-                  <Input name="company" placeholder="Your company" className="bg-gray-900 border-gray-700 text-white" />
+                  <label className="mb-1 block text-sm text-gray-400">Company (optional)</label>
+                  <Input
+                    name="company"
+                    placeholder="Your company"
+                    className="border-gray-700 bg-gray-900 text-white"
+                  />
                 </div>
                 <div className="flex space-x-2">
                   <Button
                     type="button"
                     variant="outline"
-                    className="flex-1 border-gray-700 text-gray-300 hover:border-red-600 hover:text-red-400 bg-transparent"
+                    className="flex-1 border-gray-700 bg-transparent text-gray-300 hover:border-red-600 hover:text-red-400"
                     onClick={() => setShowUserForm(false)}
                   >
                     Skip
                   </Button>
-                  <Button type="submit" className="flex-1 bg-red-600 hover:bg-red-700 text-white">
+                  <Button type="submit" className="flex-1 bg-red-600 text-white hover:bg-red-700">
                     Save
                   </Button>
                 </div>

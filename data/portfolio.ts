@@ -7,7 +7,7 @@ export const portfolioItems = [
     image: "/placeholder.svg?key=4yb53",
     video: "/placeholder.svg?key=h3deq",
     outcome: "340% conversion increase",
-    tags: ["React", "TypeScript", "Stripe"]
+    tags: ["React", "TypeScript", "Stripe"],
   },
   {
     id: "ecommerce-brand",
@@ -17,7 +17,7 @@ export const portfolioItems = [
     image: "/placeholder.svg?key=ot8h6",
     video: "/placeholder.svg?key=t3qgw",
     outcome: "250% sales increase",
-    tags: ["Shopify", "Custom Design", "CRO"]
+    tags: ["Shopify", "Custom Design", "CRO"],
   },
   {
     id: "saas-platform",
@@ -27,7 +27,7 @@ export const portfolioItems = [
     image: "/placeholder.svg?key=3zjfw",
     video: "/placeholder.svg?key=m97de",
     outcome: "60% bounce rate reduction",
-    tags: ["Next.js", "User Experience", "Analytics"]
+    tags: ["Next.js", "User Experience", "Analytics"],
   },
   {
     id: "healthcare-startup",
@@ -37,7 +37,7 @@ export const portfolioItems = [
     image: "/placeholder.svg?key=1o5vi",
     video: "/placeholder.svg?key=vg60c",
     outcome: "95% user satisfaction",
-    tags: ["React", "HIPAA Compliant", "Mobile-First"]
+    tags: ["React", "HIPAA Compliant", "Mobile-First"],
   },
   {
     id: "consulting-firm",
@@ -47,7 +47,7 @@ export const portfolioItems = [
     image: "/placeholder.svg?key=2g8za",
     video: "/placeholder.svg?key=ksom7",
     outcome: "180% lead increase",
-    tags: ["WordPress", "SEO", "Lead Generation"]
+    tags: ["WordPress", "SEO", "Lead Generation"],
   },
   {
     id: "tech-agency",
@@ -57,6 +57,6 @@ export const portfolioItems = [
     image: "/placeholder.svg?key=qitue",
     video: "/placeholder.svg?key=2tacg",
     outcome: "220% client acquisition boost",
-    tags: ["Custom CMS", "Animation", "Branding"]
-  }
-] as const;
+    tags: ["Custom CMS", "Animation", "Branding"],
+  },
+] as const

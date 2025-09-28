@@ -1,22 +1,27 @@
 "use client"
 
 import { useState } from "react"
+
 import { Card, CardContent } from "@/components/ui/card"
-import { ChevronDown, ChevronUp } from "lucide-react"
 import { faqs } from "@/data/faq"
+import { ChevronDown, ChevronUp } from "lucide-react"
 
 export function FaqSection() {
   const [openItems, setOpenItems] = useState<number[]>([])
 
   const toggleItem = (index: number) => {
-    setOpenItems((prev) => (prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]))
+    setOpenItems((prev) =>
+      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index],
+    )
   }
 
   return (
-    <section className="py-20 bg-black">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="font-bebas text-4xl sm:text-5xl text-white mb-4 tracking-wide">Frequently Asked Questions</h2>
+    <section className="bg-black py-20">
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-16 text-center">
+          <h2 className="font-bebas mb-4 text-4xl tracking-wide text-white sm:text-5xl">
+            Frequently Asked Questions
+          </h2>
           <p className="text-xl text-gray-400">Everything you need to know</p>
         </div>
 
@@ -24,23 +29,23 @@ export function FaqSection() {
           {faqs.map((faq, index) => (
             <Card
               key={index}
-              className="bg-gray-900/50 border-red-900/20 hover:border-red-600/50 transition-all duration-300"
+              className="border-red-900/20 bg-gray-900/50 transition-all duration-300 hover:border-red-600/50"
             >
               <CardContent className="p-0">
                 <button
-                  className="w-full p-6 text-left flex items-center justify-between hover:bg-red-600/5 transition-colors duration-200"
+                  className="flex w-full items-center justify-between p-6 text-left transition-colors duration-200 hover:bg-red-600/5"
                   onClick={() => toggleItem(index)}
                 >
-                  <h3 className="text-white font-semibold text-lg pr-4">{faq.question}</h3>
+                  <h3 className="pr-4 text-lg font-semibold text-white">{faq.question}</h3>
                   {openItems.includes(index) ? (
-                    <ChevronUp className="w-5 h-5 text-red-400 flex-shrink-0" />
+                    <ChevronUp className="h-5 w-5 flex-shrink-0 text-red-400" />
                   ) : (
-                    <ChevronDown className="w-5 h-5 text-red-400 flex-shrink-0" />
+                    <ChevronDown className="h-5 w-5 flex-shrink-0 text-red-400" />
                   )}
                 </button>
                 {openItems.includes(index) && (
                   <div className="px-6 pb-6">
-                    <p className="text-gray-400 leading-relaxed">{faq.answer}</p>
+                    <p className="leading-relaxed text-gray-400">{faq.answer}</p>
                   </div>
                 )}
               </CardContent>

@@ -1,12 +1,14 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
+
 import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { DEMO } from "@/lib/config"
 import {
   Users,
   Calendar,
@@ -21,7 +23,6 @@ import {
   Download,
   Trash2,
 } from "lucide-react"
-import { DEMO } from "@/lib/config"
 
 interface Lead {
   id: string
@@ -76,11 +77,13 @@ export default function AdminDashboard() {
 
     if (savedConsultations) {
       try {
-        const parsedConsultations = JSON.parse(savedConsultations).map((booking: any, index: number) => ({
-          ...booking,
-          id: booking.id || `booking_${index}`,
-          status: booking.status || "scheduled",
-        }))
+        const parsedConsultations = JSON.parse(savedConsultations).map(
+          (booking: any, index: number) => ({
+            ...booking,
+            id: booking.id || `booking_${index}`,
+            status: booking.status || "scheduled",
+          }),
+        )
         setConsultations(parsedConsultations)
       } catch (error) {
         console.error("Error loading consultations:", error)
@@ -136,7 +139,9 @@ export default function AdminDashboard() {
   }, [])
 
   const updateLeadStatus = (leadId: string, newStatus: Lead["status"]) => {
-    const updatedLeads = leads.map((lead) => (lead.id === leadId ? { ...lead, status: newStatus } : lead))
+    const updatedLeads = leads.map((lead) =>
+      lead.id === leadId ? { ...lead, status: newStatus } : lead,
+    )
     setLeads(updatedLeads)
     localStorage.setItem("consultation-leads", JSON.stringify(updatedLeads))
   }
@@ -174,19 +179,31 @@ export default function AdminDashboard() {
   const getSourceIcon = (source: Lead["source"]) => {
     switch (source) {
       case "consultation":
-        return <Calendar className="w-4 h-4" />
+        return <Calendar className="h-4 w-4" />
       case "chat":
-        return <MessageCircle className="w-4 h-4" />
+        return <MessageCircle className="h-4 w-4" />
       case "contact":
-        return <Mail className="w-4 h-4" />
+        return <Mail className="h-4 w-4" />
       default:
-        return <Users className="w-4 h-4" />
+        return <Users className="h-4 w-4" />
     }
   }
 
   const exportLeads = () => {
     const csvContent = [
-      ["Name", "Email", "Company", "Phone", "Budget", "Timeline", "Services", "Goals", "Status", "Source", "Date"],
+      [
+        "Name",
+        "Email",
+        "Company",
+        "Phone",
+        "Budget",
+        "Timeline",
+        "Services",
+        "Goals",
+        "Status",
+        "Source",
+        "Date",
+      ],
       ...filteredLeads.map((lead) => [
         lead.name,
         lead.email,
@@ -219,67 +236,69 @@ export default function AdminDashboard() {
     newLeads: leads.filter((l) => l.status === "new").length,
     qualifiedLeads: leads.filter((l) => l.status === "qualified").length,
     conversionRate:
-      leads.length > 0 ? Math.round((leads.filter((l) => l.status === "converted").length / leads.length) * 100) : 0,
+      leads.length > 0
+        ? Math.round((leads.filter((l) => l.status === "converted").length / leads.length) * 100)
+        : 0,
   }
 
   return (
     <div className="min-h-screen bg-black text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="mb-8 flex items-center justify-between">
           <div>
-            <h1 className="font-bebas text-4xl text-white tracking-wide">Admin Dashboard</h1>
+            <h1 className="font-bebas text-4xl tracking-wide text-white">Admin Dashboard</h1>
             <p className="text-gray-400">Manage leads, consultations, and track performance</p>
           </div>
           {DEMO && <Badge className="bg-yellow-500 text-black">Demo Mode</Badge>}
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card className="bg-gray-900/50 border-red-900/20">
+        <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-4">
+          <Card className="border-red-900/20 bg-gray-900/50">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-gray-400 text-sm">Total Leads</p>
+                  <p className="text-sm text-gray-400">Total Leads</p>
                   <p className="text-2xl font-bold text-white">{stats.totalLeads}</p>
                 </div>
-                <Users className="w-8 h-8 text-red-400" />
+                <Users className="h-8 w-8 text-red-400" />
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gray-900/50 border-red-900/20">
+          <Card className="border-red-900/20 bg-gray-900/50">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-gray-400 text-sm">New Leads</p>
+                  <p className="text-sm text-gray-400">New Leads</p>
                   <p className="text-2xl font-bold text-white">{stats.newLeads}</p>
                 </div>
-                <TrendingUp className="w-8 h-8 text-blue-400" />
+                <TrendingUp className="h-8 w-8 text-blue-400" />
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gray-900/50 border-red-900/20">
+          <Card className="border-red-900/20 bg-gray-900/50">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-gray-400 text-sm">Qualified</p>
+                  <p className="text-sm text-gray-400">Qualified</p>
                   <p className="text-2xl font-bold text-white">{stats.qualifiedLeads}</p>
                 </div>
-                <Package className="w-8 h-8 text-green-400" />
+                <Package className="h-8 w-8 text-green-400" />
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gray-900/50 border-red-900/20">
+          <Card className="border-red-900/20 bg-gray-900/50">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-gray-400 text-sm">Conversion Rate</p>
+                  <p className="text-sm text-gray-400">Conversion Rate</p>
                   <p className="text-2xl font-bold text-white">{stats.conversionRate}%</p>
                 </div>
-                <TrendingUp className="w-8 h-8 text-purple-400" />
+                <TrendingUp className="h-8 w-8 text-purple-400" />
               </div>
             </CardContent>
           </Card>
@@ -287,7 +306,7 @@ export default function AdminDashboard() {
 
         {/* Main Content */}
         <Tabs defaultValue="leads" className="space-y-6">
-          <TabsList className="bg-gray-900 border-red-900/20">
+          <TabsList className="border-red-900/20 bg-gray-900">
             <TabsTrigger value="leads" className="data-[state=active]:bg-red-600">
               Leads ({leads.length})
             </TabsTrigger>
@@ -301,23 +320,23 @@ export default function AdminDashboard() {
 
           <TabsContent value="leads" className="space-y-6">
             {/* Filters and Search */}
-            <Card className="bg-gray-900/50 border-red-900/20">
+            <Card className="border-red-900/20 bg-gray-900/50">
               <CardContent className="p-6">
-                <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
-                  <div className="flex flex-col sm:flex-row gap-4 flex-1">
+                <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+                  <div className="flex flex-1 flex-col gap-4 sm:flex-row">
                     <div className="relative flex-1">
-                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                      <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
                       <Input
                         placeholder="Search leads..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="pl-10 bg-gray-800 border-gray-700 text-white"
+                        className="border-gray-700 bg-gray-800 pl-10 text-white"
                       />
                     </div>
                     <select
                       value={statusFilter}
                       onChange={(e) => setStatusFilter(e.target.value)}
-                      className="px-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-white"
+                      className="rounded-md border border-gray-700 bg-gray-800 px-3 py-2 text-white"
                     >
                       <option value="all">All Status</option>
                       <option value="new">New</option>
@@ -329,9 +348,9 @@ export default function AdminDashboard() {
                   <Button
                     onClick={exportLeads}
                     variant="outline"
-                    className="border-red-600 text-red-400 hover:bg-red-600 hover:text-white bg-transparent"
+                    className="border-red-600 bg-transparent text-red-400 hover:bg-red-600 hover:text-white"
                   >
-                    <Download className="w-4 h-4 mr-2" />
+                    <Download className="mr-2 h-4 w-4" />
                     Export CSV
                   </Button>
                 </div>
@@ -341,10 +360,10 @@ export default function AdminDashboard() {
             {/* Leads List */}
             <div className="space-y-4">
               {filteredLeads.length === 0 ? (
-                <Card className="bg-gray-900/50 border-red-900/20">
+                <Card className="border-red-900/20 bg-gray-900/50">
                   <CardContent className="p-12 text-center">
-                    <Users className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold text-white mb-2">No leads found</h3>
+                    <Users className="mx-auto mb-4 h-12 w-12 text-gray-400" />
+                    <h3 className="mb-2 text-lg font-semibold text-white">No leads found</h3>
                     <p className="text-gray-400">
                       {searchTerm || statusFilter !== "all"
                         ? "Try adjusting your search or filters"
@@ -356,30 +375,30 @@ export default function AdminDashboard() {
                 filteredLeads.map((lead) => (
                   <Card
                     key={lead.id}
-                    className="bg-gray-900/50 border-red-900/20 hover:border-red-600/50 transition-colors"
+                    className="border-red-900/20 bg-gray-900/50 transition-colors hover:border-red-600/50"
                   >
                     <CardContent className="p-6">
-                      <div className="flex items-start justify-between mb-4">
+                      <div className="mb-4 flex items-start justify-between">
                         <div className="flex items-start space-x-4">
-                          <div className="w-10 h-10 bg-red-600/20 rounded-full flex items-center justify-center">
+                          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-600/20">
                             {getSourceIcon(lead.source)}
                           </div>
                           <div>
-                            <h3 className="font-semibold text-white text-lg">{lead.name}</h3>
-                            <div className="flex items-center space-x-4 text-sm text-gray-400 mt-1">
+                            <h3 className="text-lg font-semibold text-white">{lead.name}</h3>
+                            <div className="mt-1 flex items-center space-x-4 text-sm text-gray-400">
                               <span className="flex items-center">
-                                <Mail className="w-4 h-4 mr-1" />
+                                <Mail className="mr-1 h-4 w-4" />
                                 {lead.email}
                               </span>
                               {lead.company && (
                                 <span className="flex items-center">
-                                  <Building className="w-4 h-4 mr-1" />
+                                  <Building className="mr-1 h-4 w-4" />
                                   {lead.company}
                                 </span>
                               )}
                               {lead.phone && (
                                 <span className="flex items-center">
-                                  <Phone className="w-4 h-4 mr-1" />
+                                  <Phone className="mr-1 h-4 w-4" />
                                   {lead.phone}
                                 </span>
                               )}
@@ -387,15 +406,17 @@ export default function AdminDashboard() {
                           </div>
                         </div>
                         <div className="flex items-center space-x-2">
-                          <Badge className={`${getStatusColor(lead.status)} text-white`}>{lead.status}</Badge>
-                          <span className="text-xs text-gray-500 flex items-center">
-                            <Clock className="w-3 h-3 mr-1" />
+                          <Badge className={`${getStatusColor(lead.status)} text-white`}>
+                            {lead.status}
+                          </Badge>
+                          <span className="flex items-center text-xs text-gray-500">
+                            <Clock className="mr-1 h-3 w-3" />
                             {new Date(lead.timestamp).toLocaleDateString()}
                           </span>
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                      <div className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-3">
                         <div>
                           <Label className="text-xs text-gray-400">Budget</Label>
                           <p className="text-sm text-white">£{lead.budget.replace("-", " - ")}</p>
@@ -413,16 +434,18 @@ export default function AdminDashboard() {
                       {lead.goals && (
                         <div className="mb-4">
                           <Label className="text-xs text-gray-400">Goals</Label>
-                          <p className="text-sm text-gray-300 mt-1">{lead.goals}</p>
+                          <p className="mt-1 text-sm text-gray-300">{lead.goals}</p>
                         </div>
                       )}
 
-                      <div className="flex items-center justify-between pt-4 border-t border-gray-800">
+                      <div className="flex items-center justify-between border-t border-gray-800 pt-4">
                         <div className="flex space-x-2">
                           <select
                             value={lead.status}
-                            onChange={(e) => updateLeadStatus(lead.id, e.target.value as Lead["status"])}
-                            className="px-3 py-1 bg-gray-800 border border-gray-700 rounded text-white text-sm"
+                            onChange={(e) =>
+                              updateLeadStatus(lead.id, e.target.value as Lead["status"])
+                            }
+                            className="rounded border border-gray-700 bg-gray-800 px-3 py-1 text-sm text-white"
                           >
                             <option value="new">New</option>
                             <option value="contacted">Contacted</option>
@@ -434,19 +457,19 @@ export default function AdminDashboard() {
                           <Button
                             size="sm"
                             variant="outline"
-                            className="border-red-600/50 text-red-400 hover:bg-red-600/10 bg-transparent"
+                            className="border-red-600/50 bg-transparent text-red-400 hover:bg-red-600/10"
                             onClick={() => window.open(`mailto:${lead.email}`, "_blank")}
                           >
-                            <Mail className="w-4 h-4 mr-1" />
+                            <Mail className="mr-1 h-4 w-4" />
                             Email
                           </Button>
                           <Button
                             size="sm"
                             variant="outline"
-                            className="border-gray-600 text-gray-400 hover:bg-gray-600 hover:text-white bg-transparent"
+                            className="border-gray-600 bg-transparent text-gray-400 hover:bg-gray-600 hover:text-white"
                             onClick={() => deleteLead(lead.id)}
                           >
-                            <Trash2 className="w-4 h-4" />
+                            <Trash2 className="h-4 w-4" />
                           </Button>
                         </div>
                       </div>
@@ -458,20 +481,21 @@ export default function AdminDashboard() {
           </TabsContent>
 
           <TabsContent value="consultations" className="space-y-6">
-            <Card className="bg-gray-900/50 border-red-900/20">
+            <Card className="border-red-900/20 bg-gray-900/50">
               <CardContent className="p-12 text-center">
-                <Calendar className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-white mb-2">Consultation Management</h3>
+                <Calendar className="mx-auto mb-4 h-12 w-12 text-gray-400" />
+                <h3 className="mb-2 text-lg font-semibold text-white">Consultation Management</h3>
                 <p className="text-gray-400">
-                  Scheduled consultations will appear here. Integration with calendar systems coming soon.
+                  Scheduled consultations will appear here. Integration with calendar systems coming
+                  soon.
                 </p>
               </CardContent>
             </Card>
           </TabsContent>
 
           <TabsContent value="analytics" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card className="bg-gray-900/50 border-red-900/20">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              <Card className="border-red-900/20 bg-gray-900/50">
                 <CardHeader>
                   <CardTitle className="text-white">Lead Sources</CardTitle>
                 </CardHeader>
@@ -479,19 +503,23 @@ export default function AdminDashboard() {
                   <div className="space-y-4">
                     {["consultation", "chat", "contact"].map((source) => {
                       const count = leads.filter((l) => l.source === source).length
-                      const percentage = leads.length > 0 ? Math.round((count / leads.length) * 100) : 0
+                      const percentage =
+                        leads.length > 0 ? Math.round((count / leads.length) * 100) : 0
                       return (
                         <div key={source} className="flex items-center justify-between">
                           <div className="flex items-center space-x-2">
                             {getSourceIcon(source as Lead["source"])}
-                            <span className="text-white capitalize">{source}</span>
+                            <span className="capitalize text-white">{source}</span>
                           </div>
                           <div className="flex items-center space-x-2">
                             <span className="text-gray-400">{count}</span>
-                            <div className="w-20 h-2 bg-gray-700 rounded-full">
-                              <div className="h-full bg-red-600 rounded-full" style={{ width: `${percentage}%` }} />
+                            <div className="h-2 w-20 rounded-full bg-gray-700">
+                              <div
+                                className="h-full rounded-full bg-red-600"
+                                style={{ width: `${percentage}%` }}
+                              />
                             </div>
-                            <span className="text-sm text-gray-400 w-8">{percentage}%</span>
+                            <span className="w-8 text-sm text-gray-400">{percentage}%</span>
                           </div>
                         </div>
                       )
@@ -500,7 +528,7 @@ export default function AdminDashboard() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-gray-900/50 border-red-900/20">
+              <Card className="border-red-900/20 bg-gray-900/50">
                 <CardHeader>
                   <CardTitle className="text-white">Lead Status Distribution</CardTitle>
                 </CardHeader>
@@ -508,19 +536,25 @@ export default function AdminDashboard() {
                   <div className="space-y-4">
                     {["new", "contacted", "qualified", "converted"].map((status) => {
                       const count = leads.filter((l) => l.status === status).length
-                      const percentage = leads.length > 0 ? Math.round((count / leads.length) * 100) : 0
+                      const percentage =
+                        leads.length > 0 ? Math.round((count / leads.length) * 100) : 0
                       return (
                         <div key={status} className="flex items-center justify-between">
                           <div className="flex items-center space-x-2">
-                            <div className={`w-3 h-3 rounded-full ${getStatusColor(status as Lead["status"])}`} />
-                            <span className="text-white capitalize">{status}</span>
+                            <div
+                              className={`h-3 w-3 rounded-full ${getStatusColor(status as Lead["status"])}`}
+                            />
+                            <span className="capitalize text-white">{status}</span>
                           </div>
                           <div className="flex items-center space-x-2">
                             <span className="text-gray-400">{count}</span>
-                            <div className="w-20 h-2 bg-gray-700 rounded-full">
-                              <div className="h-full bg-red-600 rounded-full" style={{ width: `${percentage}%` }} />
+                            <div className="h-2 w-20 rounded-full bg-gray-700">
+                              <div
+                                className="h-full rounded-full bg-red-600"
+                                style={{ width: `${percentage}%` }}
+                              />
                             </div>
-                            <span className="text-sm text-gray-400 w-8">{percentage}%</span>
+                            <span className="w-8 text-sm text-gray-400">{percentage}%</span>
                           </div>
                         </div>
                       )

@@ -1,19 +1,19 @@
 "use client"
 
-import { Navigation } from "@/components/layout/navigation"
-import { Footer } from "@/components/layout/footer"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Check, Star, ArrowRight } from "lucide-react"
-import { packages } from "@/data/pricing"
-import { services } from "@/data/services"
-import { createCheckoutSession } from "@/lib/adapters/payments-adapter"
-import { useBookingDialog } from "@/hooks/use-booking-dialog"
 import { BookingDialog } from "@/components/booking/booking-dialog"
 import { ChatWidget } from "@/components/chat/chat-widget"
+import { Footer } from "@/components/layout/footer"
+import { Navigation } from "@/components/layout/navigation"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Toaster } from "@/components/ui/toaster"
+import { packages } from "@/data/pricing"
+import { services } from "@/data/services"
+import { useBookingDialog } from "@/hooks/use-booking-dialog"
 import { useToast } from "@/hooks/use-toast"
+import { createCheckoutSession } from "@/lib/adapters/payments-adapter"
+import { Check, Star, ArrowRight } from "lucide-react"
 
 export default function ServicesPage() {
   const { isOpen, closeDialog, openDialog } = useBookingDialog()
@@ -48,39 +48,42 @@ export default function ServicesPage() {
       <Navigation />
       <main>
         {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-b from-gray-900/50 to-black relative overflow-hidden">
-          <div className="absolute inset-0 spider-web-bg opacity-20" />
-          <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="font-bebas text-5xl sm:text-6xl text-white mb-6 tracking-wide">Our Services</h1>
-            <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
-              Choose the perfect package for your business needs. From quick launches to comprehensive solutions.
+        <section className="relative overflow-hidden bg-gradient-to-b from-gray-900/50 to-black py-20">
+          <div className="spider-web-bg absolute inset-0 opacity-20" />
+          <div className="relative z-10 mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+            <h1 className="font-bebas mb-6 text-5xl tracking-wide text-white sm:text-6xl">
+              Our Services
+            </h1>
+            <p className="mx-auto mb-8 max-w-2xl text-xl leading-relaxed text-gray-300">
+              Choose the perfect package for your business needs. From quick launches to
+              comprehensive solutions.
             </p>
           </div>
         </section>
 
         {/* Services Overview */}
-        <section className="py-20 bg-gray-900/30">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="font-bebas text-4xl text-white mb-4 tracking-wide">What We Deliver</h2>
-              <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+        <section className="bg-gray-900/30 py-20">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-16 text-center">
+              <h2 className="font-bebas mb-4 text-4xl tracking-wide text-white">What We Deliver</h2>
+              <p className="mx-auto max-w-2xl text-xl text-gray-400">
                 End-to-end web solutions designed to drive conversions and business growth
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
               {services.map((service, index) => (
                 <Card
                   key={service.id}
-                  className="bg-black/50 border-red-900/20 hover:border-red-600/50 transition-all duration-300 stagger-item glossy"
+                  className="stagger-item glossy border-red-900/20 bg-black/50 transition-all duration-300 hover:border-red-600/50"
                 >
                   <CardContent className="p-6">
-                    <h3 className="font-semibold text-white text-xl mb-3">{service.title}</h3>
-                    <p className="text-gray-400 mb-4">{service.description}</p>
+                    <h3 className="mb-3 text-xl font-semibold text-white">{service.title}</h3>
+                    <p className="mb-4 text-gray-400">{service.description}</p>
                     <ul className="space-y-2">
                       {service.features.map((feature, idx) => (
-                        <li key={idx} className="text-sm text-gray-300 flex items-center">
-                          <Check className="w-4 h-4 text-red-400 mr-2 flex-shrink-0" />
+                        <li key={idx} className="flex items-center text-sm text-gray-300">
+                          <Check className="mr-2 h-4 w-4 flex-shrink-0 text-red-400" />
                           {feature}
                         </li>
                       ))}
@@ -93,46 +96,52 @@ export default function ServicesPage() {
         </section>
 
         {/* Pricing Packages */}
-        <section className="py-20 bg-black">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="font-bebas text-4xl sm:text-5xl text-white mb-4 tracking-wide">Choose Your Package</h2>
-              <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+        <section className="bg-black py-20">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-16 text-center">
+              <h2 className="font-bebas mb-4 text-4xl tracking-wide text-white sm:text-5xl">
+                Choose Your Package
+              </h2>
+              <p className="mx-auto max-w-2xl text-xl text-gray-400">
                 Transparent pricing with no hidden fees. All packages include our quality guarantee.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+            <div className="mb-12 grid grid-cols-1 gap-8 lg:grid-cols-3">
               {packages.map((pkg, index) => (
                 <Card
                   key={pkg.id}
-                  className={`relative bg-gray-900/50 border-red-900/20 hover:border-red-600/50 transition-all duration-300 ${
-                    pkg.popular ? "ring-2 ring-red-600/50 scale-105 lg:scale-110" : ""
+                  className={`relative border-red-900/20 bg-gray-900/50 transition-all duration-300 hover:border-red-600/50 ${
+                    pkg.popular ? "scale-105 ring-2 ring-red-600/50 lg:scale-110" : ""
                   }`}
                 >
                   {pkg.popular && (
-                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                      <Badge className="bg-red-600 text-white px-4 py-1 text-sm font-semibold">
-                        <Star className="w-3 h-3 mr-1" />
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 transform">
+                      <Badge className="bg-red-600 px-4 py-1 text-sm font-semibold text-white">
+                        <Star className="mr-1 h-3 w-3" />
                         Most Popular
                       </Badge>
                     </div>
                   )}
 
-                  <CardHeader className="text-center pb-4">
-                    <h3 className="font-bebas text-3xl text-white mb-2 tracking-wide">{pkg.name}</h3>
+                  <CardHeader className="pb-4 text-center">
+                    <h3 className="font-bebas mb-2 text-3xl tracking-wide text-white">
+                      {pkg.name}
+                    </h3>
                     <div className="mb-4">
-                      <span className="text-4xl font-bold text-red-400">£{pkg.price.toLocaleString()}</span>
-                      <span className="text-gray-500 text-lg">+</span>
+                      <span className="text-4xl font-bold text-red-400">
+                        £{pkg.price.toLocaleString()}
+                      </span>
+                      <span className="text-lg text-gray-500">+</span>
                     </div>
                     <p className="text-gray-400">{pkg.description}</p>
                   </CardHeader>
 
                   <CardContent className="pt-0">
-                    <ul className="space-y-3 mb-8">
+                    <ul className="mb-8 space-y-3">
                       {pkg.features.map((feature, idx) => (
-                        <li key={idx} className="text-gray-300 flex items-start">
-                          <Check className="w-5 h-5 text-red-400 mr-3 flex-shrink-0 mt-0.5" />
+                        <li key={idx} className="flex items-start text-gray-300">
+                          <Check className="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-red-400" />
                           <span className="text-sm">{feature}</span>
                         </li>
                       ))}
@@ -140,20 +149,20 @@ export default function ServicesPage() {
 
                     <div className="space-y-3">
                       <Button
-                        className={`w-full font-semibold py-3 rounded-xl transition-all duration-300 ${
+                        className={`w-full rounded-xl py-3 font-semibold transition-all duration-300 ${
                           pkg.popular
-                            ? "bg-red-600 hover:bg-red-700 text-white shadow-lg hover:shadow-xl"
-                            : "bg-gray-800 hover:bg-red-600 text-white border border-gray-700 hover:border-red-600"
+                            ? "bg-red-600 text-white shadow-lg hover:bg-red-700 hover:shadow-xl"
+                            : "border border-gray-700 bg-gray-800 text-white hover:border-red-600 hover:bg-red-600"
                         }`}
                         onClick={() => handlePurchase(pkg.id, pkg.priceKey)}
                       >
                         Buy {pkg.name} Package
-                        <ArrowRight className="w-4 h-4 ml-2" />
+                        <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
 
                       <Button
                         variant="outline"
-                        className="w-full border-red-600/50 text-red-400 hover:bg-red-600/10 hover:border-red-600 bg-transparent"
+                        className="w-full border-red-600/50 bg-transparent text-red-400 hover:border-red-600 hover:bg-red-600/10"
                         onClick={openDialog}
                       >
                         Discuss This Package
@@ -166,15 +175,17 @@ export default function ServicesPage() {
 
             {/* Additional Info */}
             <div className="text-center">
-              <div className="bg-gray-900/50 rounded-2xl p-8 max-w-4xl mx-auto">
-                <h3 className="font-bebas text-2xl text-white mb-4 tracking-wide">Need Something Custom?</h3>
-                <p className="text-gray-400 mb-6">
-                  Every business is unique. If our packages don't quite fit your needs, let's discuss a custom solution
-                  tailored specifically for your goals.
+              <div className="mx-auto max-w-4xl rounded-2xl bg-gray-900/50 p-8">
+                <h3 className="font-bebas mb-4 text-2xl tracking-wide text-white">
+                  Need Something Custom?
+                </h3>
+                <p className="mb-6 text-gray-400">
+                  Every business is unique. If our packages don't quite fit your needs, let's
+                  discuss a custom solution tailored specifically for your goals.
                 </p>
                 <Button
                   size="lg"
-                  className="bg-red-600 hover:bg-red-700 text-white font-semibold px-8 py-3 rounded-xl"
+                  className="rounded-xl bg-red-600 px-8 py-3 font-semibold text-white hover:bg-red-700"
                   onClick={openDialog}
                 >
                   Book Custom Consultation
@@ -185,16 +196,19 @@ export default function ServicesPage() {
         </section>
 
         {/* Process Overview */}
-        <section className="py-20 bg-gray-900/30">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="font-bebas text-4xl text-white mb-4 tracking-wide">What Happens Next?</h2>
-              <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-                Our streamlined process ensures your project launches on time and exceeds expectations
+        <section className="bg-gray-900/30 py-20">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-16 text-center">
+              <h2 className="font-bebas mb-4 text-4xl tracking-wide text-white">
+                What Happens Next?
+              </h2>
+              <p className="mx-auto max-w-2xl text-xl text-gray-400">
+                Our streamlined process ensures your project launches on time and exceeds
+                expectations
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
               {[
                 {
                   step: "01",
@@ -205,25 +219,28 @@ export default function ServicesPage() {
                 {
                   step: "02",
                   title: "Strategy & Planning",
-                  description: "We analyze your business, competitors, and audience to create a winning strategy.",
+                  description:
+                    "We analyze your business, competitors, and audience to create a winning strategy.",
                 },
                 {
                   step: "03",
                   title: "Design & Build",
-                  description: "Our team designs and develops your website with regular updates and feedback loops.",
+                  description:
+                    "Our team designs and develops your website with regular updates and feedback loops.",
                 },
                 {
                   step: "04",
                   title: "Launch & Support",
-                  description: "We launch your site, provide training, and offer ongoing support as included.",
+                  description:
+                    "We launch your site, provide training, and offer ongoing support as included.",
                 },
               ].map((item, index) => (
                 <div key={index} className="text-center">
-                  <div className="w-16 h-16 bg-red-600/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-600/20">
                     <span className="font-bebas text-xl text-red-400">{item.step}</span>
                   </div>
-                  <h3 className="font-semibold text-white text-lg mb-2">{item.title}</h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">{item.description}</p>
+                  <h3 className="mb-2 text-lg font-semibold text-white">{item.title}</h3>
+                  <p className="text-sm leading-relaxed text-gray-400">{item.description}</p>
                 </div>
               ))}
             </div>
@@ -231,14 +248,16 @@ export default function ServicesPage() {
         </section>
 
         {/* FAQ Section */}
-        <section className="py-20 bg-black">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="font-bebas text-4xl text-white mb-4 tracking-wide">Package Questions</h2>
+        <section className="bg-black py-20">
+          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-16 text-center">
+              <h2 className="font-bebas mb-4 text-4xl tracking-wide text-white">
+                Package Questions
+              </h2>
               <p className="text-xl text-gray-400">Common questions about our service packages</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
               {[
                 {
                   question: "What's included in support?",
@@ -261,10 +280,10 @@ export default function ServicesPage() {
                     "We can recommend hosting solutions and help with setup, or work with your existing provider.",
                 },
               ].map((faq, index) => (
-                <Card key={index} className="bg-gray-900/50 border-red-900/20">
+                <Card key={index} className="border-red-900/20 bg-gray-900/50">
                   <CardContent className="p-6">
-                    <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                    <p className="text-gray-400 text-sm leading-relaxed">{faq.answer}</p>
+                    <h3 className="mb-2 font-semibold text-white">{faq.question}</h3>
+                    <p className="text-sm leading-relaxed text-gray-400">{faq.answer}</p>
                   </CardContent>
                 </Card>
               ))}
