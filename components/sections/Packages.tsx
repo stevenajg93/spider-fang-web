@@ -51,95 +51,98 @@ const packages: Pkg[] = [
   },
 ]
 
-function Price({ oldPrice, newPrice }: { oldPrice?: string; newPrice: string }) {
-  // Landing page shows FREE (positive, green)
-  if (newPrice === "FREE") {
-    return (
-      <div className="flex items-baseline gap-3">
-        <span className="relative text-3xl md:text-4xl font-bold text-white/90">
-          {oldPrice}
-          <span
-            aria-hidden
-            className="absolute left-0 right-0 top-1/2 h-[2px] -translate-y-1/2 rotate-[-5deg] bg-red-400/80"
-          />
-        </span>
-        <span className="text-2xl md:text-3xl font-extrabold text-green-500">FREE</span>
-      </div>
-    )
-  }
-
-  if (!oldPrice) {
-    return <span className="text-2xl md:text-3xl font-bold text-foreground">{newPrice}</span>
-  }
-
-  return (
-    <div className="flex items-baseline gap-3" aria-label={`Price reduced from ${oldPrice} to ${newPrice}`}>
-      {/* Old price: larger, white, with subtle red score */}
-      <span className="relative text-3xl md:text-4xl font-bold text-white">
-        {oldPrice}
-        <span
-          aria-hidden
-          className="absolute left-0 right-0 top-1/2 h-[2px] -translate-y-1/2 rotate-[-5deg] bg-red-400/80"
-        />
-      </span>
-      {/* New price: slightly smaller, positive green */}
-      <span className="text-2xl md:text-3xl font-extrabold text-green-500">{newPrice}</span>
-    </div>
-  )
-}
-
 export default function Packages() {
   return (
-    <section id="packages" className="py-20 bg-transparent">
-      <div className="container mx-auto px-4 sm:px-6">
-        <div className="mx-auto mb-12 max-w-3xl text-center">
-          <h2 className="text-[clamp(1.5rem,4.6vw,2.5rem)] font-bold tracking-tight">Our Packages</h2>
+    <section id="packages" className="sf-grid sf-noise relative border-t bg-transparent">
+      <div aria-hidden className="sf-radial absolute inset-0" />
+      <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 md:py-24">
+        <motion.div
+          className="mx-auto max-w-3xl text-center"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <h2 className="text-[clamp(1.6rem,4.6vw,2.6rem)] font-bold tracking-tight text-foreground">
+            Our Packages
+          </h2>
           <p className="mt-3 text-muted-foreground">
-            Start with a free £500 homepage design, then choose the package that fits your next step.
+            Choose a starting point or scale to a full solution.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {packages.map((p, i) => (
             <motion.div
               key={p.slug}
-              initial={{ opacity: 0, y: 18 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.45, delay: 0.05 * i }}
+              transition={{ duration: 0.5, delay: i * 0.05 }}
             >
-              <Card className="h-full overflow-hidden border-border/60 bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/50">
-                <div className="flex h-full flex-col p-6">
-                  <div className="flex items-start justify-between gap-3">
-                    <h3 className="text-xl font-semibold tracking-tight">{p.name}</h3>
+              <Card className="group flex h-full flex-col justify-between rounded-2xl border border-border/60 bg-card/70 p-6 backdrop-blur-sm">
+                <div>
+                  <div className="flex items-start justify-between">
+                    <h3 className="text-lg font-semibold text-foreground">{p.name}</h3>
                     {p.limited && (
-                      <span className="inline-flex items-center rounded-full bg-red-500/10 px-2.5 py-1 text-[11px] font-semibold text-red-600 ring-1 ring-inset ring-red-500/20">
+                      <span className="rounded-full border border-red-500/40 bg-red-500/10 px-2.5 py-1 text-xs font-semibold text-red-600">
                         Limited Offer
                       </span>
                     )}
                   </div>
 
-                  <div className="mt-3">
-                    <Price oldPrice={p.oldPrice} newPrice={p.newPrice} />
+                  {/* Pricing block: visible in light & dark */}
+                  <div className="mt-4">
+                    {p.oldPrice ? (
+                      <div className="flex items-baseline gap-3">
+                        <span
+                          className="
+                            text-[clamp(1.6rem,4.5vw,2.25rem)]
+                            font-extrabold
+                            leading-none
+                            text-gray-900 dark:text-white
+                            line-through decoration-red-500/70 decoration-2
+                          "
+                        >
+                          {p.oldPrice}
+                        </span>
+                        <span
+                          className="
+                            text-[clamp(1.2rem,4vw,1.6rem)]
+                            font-bold
+                            leading-none
+                            text-emerald-600
+                          "
+                        >
+                          {p.newPrice}
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="flex items-baseline gap-3">
+                        <span className="text-[clamp(1.6rem,4.5vw,2.25rem)] font-extrabold leading-none text-gray-900 dark:text-white">
+                          {p.newPrice}
+                        </span>
+                      </div>
+                    )}
                   </div>
 
-                  <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{p.blurb}</p>
+                  <p className="mt-4 text-sm text-muted-foreground">{p.blurb}</p>
+                </div>
 
-                  {/* spacer to push the button to the bottom for perfect alignment across cards */}
-                  <div className="mt-6 flex-1" />
-
-                  <motion.div
-                    className="pt-2"
-                    animate={{ y: [0, -3, 0] }}
-                    transition={{ duration: 3, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+                <div className="mt-6">
+                  <Link
+                    href={`/purchase/${p.slug}`}
+                    className="
+                      inline-flex w-full items-center justify-center
+                      rounded-lg border border-emerald-600 bg-emerald-600 px-4 py-2.5
+                      font-semibold text-white shadow-sm transition
+                      hover:bg-emerald-700
+                      focus:outline-none focus:ring-2 focus:ring-emerald-600/30
+                      md:py-3
+                    "
                   >
-                    <Link
-                      href={`/purchase/${p.slug}`}
-                      className="inline-flex w-full items-center justify-center rounded-md bg-green-600 px-5 py-2.5 text-sm font-semibold text-white shadow hover:opacity-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-600/60"
-                    >
-                      Select
-                    </Link>
-                  </motion.div>
+                    Select
+                  </Link>
                 </div>
               </Card>
             </motion.div>
