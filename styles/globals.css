@@ -123,3 +123,344 @@
     @apply bg-background text-foreground;
   }
 }
+/* === Mobile-first polish: type, spacing, tap targets === */
+@media (max-width: 640px) {
+  /* Typography scale */
+  h1 { font-size: clamp(28px, 7vw, 40px); line-height: 1.15; letter-spacing: -0.01em; }
+  h2 { font-size: clamp(22px, 6vw, 28px); line-height: 1.2;  letter-spacing: -0.005em; }
+  h3 { font-size: clamp(18px, 5.5vw, 22px); line-height: 1.25; }
+  p, li { font-size: 16px; line-height: 1.6; }
+
+  /* Section rhythm */
+  main, section { padding-left: 16px; padding-right: 16px; }
+  section { padding-top: 32px; padding-bottom: 32px; }
+
+  /* Lists and feature bullets */
+  ul { margin: 12px 0; padding-left: 1.1rem; }
+  ul > li { margin: 6px 0; }
+
+  /* Buttons/links as buttons: make thumb-friendly */
+  button,
+  [role="button"],
+  .btn,
+  a.button,
+  a[aria-role="button"] {
+    min-height: 48px;
+    padding: 12px 16px;
+    width: 100%;
+    border-radius: 12px;
+  }
+
+  /* Forms */
+  input, select, textarea {
+    width: 100%;
+    min-height: 44px;
+    padding: 12px 14px;
+    font-size: 16px; /* prevents iOS zoom-on-focus */
+    border-radius: 10px;
+  }
+
+  /* Cards/grids collapse nicely */
+  .grid, .cards, .packages { grid-template-columns: 1fr !important; gap: 16px !important; }
+  .card, article { border-radius: 16px; padding: 16px; }
+
+  /* Images */
+  img { max-width: 100%; height: auto; }
+
+  /* Tables (if any) */
+  table { display: block; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+
+/* Prefer reduced motion for users who ask for it */
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
+/* === Mobile overflow fix for form fields === */
+@media (max-width: 640px) {
+  html, body { overflow-x: hidden; }
+
+  /* Keep any form from pushing the layout wider than the viewport */
+  form { max-width: 100%; overflow-x: hidden; }
+
+  /* Inputs: never exceed the viewport, prevent iOS zoom-on-focus */
+  input, select, textarea {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+
+  /* Common row/column wrappers—allow wrapping on small screens */
+  .row, .grid, .form-row, .flex {
+    flex-wrap: wrap !important;
+  }
+
+  /* Make split fields (e.g., first/last name) stack on mobile */
+  .col, .half, .third, .quarter {
+    flex: 1 1 100% !important;
+    width: 100% !important;
+  }
+
+  /* Safety: any element accidentally sized to screen+padding */
+  [style*="width: 100vw"], .w-screen {
+    width: 100% !important;
+  }
+}
+/* ===== Fix mobile overflow in "Claim your Free Design" section ===== */
+@media (max-width: 640px) {
+  /* Scope to the section */
+  #free-design { overflow-x: hidden; }
+
+  /* Any background/absolute child won't create horizontal scroll */
+  #free-design * { box-sizing: border-box; max-width: 100%; }
+
+  /* Form + rows */
+  #free-design form { max-width: 100%; overflow-x: hidden; }
+  #free-design .flex, 
+  #free-design .form-row, 
+  #free-design .grid { flex-wrap: wrap !important; }
+
+  /* Columns: always stack on mobile */
+  #free-design .col,
+  #free-design .half,
+  #free-design .third,
+  #free-design .quarter { flex: 1 1 100% !important; width: 100% !important; }
+
+  /* Inputs: never wider than viewport (file inputs included) */
+  #free-design input,
+  #free-design select,
+  #free-design textarea {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    font-size: 16px; /* avoid iOS zoom */
+  }
+
+  /* Kill the common culprit: w-screen or 100vw children inside padding */
+  #free-design .w-screen,
+  #free-design [style*="100vw"] { width: 100% !important; }
+
+  /* Safety for long placeholders/URLs */
+  #free-design input::placeholder { white-space: normal; }
+}
+@media (max-width: 640px) {
+  .free-prototype, .free-design,
+  #free-prototype, #free-design,
+  section[id*="free"][id*="proto"], section[id*="free"][id*="design"],
+  [data-section="free-prototype"] {
+    width: 100%;
+    overflow-x: hidden !important;
+  }
+
+  .free-prototype *, .free-design *,
+  #free-prototype *, #free-design * {
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+
+  .free-prototype form, .free-design form,
+  #free-prototype form, #free-design form {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .free-prototype .flex > *, .free-design .flex > *,
+  #free-prototype .flex > *, #free-design .flex > * {
+    min-width: 0 !important;
+    width: 100%;
+  }
+
+  .free-prototype .grid, .free-design .grid,
+  #free-prototype .grid, #free-design .grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .free-prototype .w-screen, .free-design .w-screen,
+  #free-prototype .w-screen, #free-design .w-screen,
+  .free-prototype [style*="100vw"], .free-design [style*="100vw"],
+  #free-prototype [style*="100vw"], #free-design [style*="100vw"] {
+    width: 100% !important;
+  }
+
+  .free-prototype [class*="-mx-"], .free-design [class*="-mx-"],
+  #free-prototype [class*="-mx-"], #free-design [class*="-mx-"] {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .free-prototype input, .free-prototype select, .free-prototype textarea,
+  .free-design input, .free-design select, .free-design textarea,
+  #free-prototype input, #free-prototype select, #free-prototype textarea,
+  #free-design input, #free-design select, #free-design textarea {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    font-size: 16px;
+  }
+}
+@media (max-width: 640px) {
+  form {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  form * {
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box;
+  }
+
+  input, select, textarea {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    font-size: 16px;
+  }
+}
+@media (max-width: 640px) {
+  #free-design, .free-design, #free-prototype, .free-prototype {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  #free-design form, .free-design form, #free-prototype form, .free-prototype form {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    gap: 12px !important;
+  }
+
+  #free-design input,
+  #free-design select,
+  #free-design textarea,
+  #free-design button,
+  .free-design input,
+  .free-design select,
+  .free-design textarea,
+  .free-design button,
+  #free-prototype input,
+  #free-prototype select,
+  #free-prototype textarea,
+  #free-prototype button,
+  .free-prototype input,
+  .free-prototype select,
+  .free-prototype textarea,
+  .free-prototype button {
+    display: block;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+
+  #free-design textarea,
+  .free-design textarea,
+  #free-prototype textarea,
+  .free-prototype textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  #free-design .form-row,
+  .free-design .form-row,
+  #free-prototype .form-row,
+  .free-prototype .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  #free-design .form-row > *,
+  .free-design .form-row > *,
+  #free-prototype .form-row > *,
+  .free-prototype .form-row > * {
+    flex: 1 1 100%;
+  }
+
+  #free-design .help,
+  .free-design .help,
+  #free-prototype .help,
+  .free-prototype .help,
+  #free-design small,
+  .free-design small,
+  #free-prototype small,
+  .free-prototype small,
+  #free-design p,
+  .free-design p,
+  #free-prototype p,
+  .free-prototype p {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  #free-design input[type="file"],
+  .free-design input[type="file"],
+  #free-prototype input[type="file"],
+  .free-prototype input[type="file"] {
+    padding: 10px 12px;
+  }
+
+  #free-design .submit,
+  .free-design .submit,
+  #free-prototype .submit,
+  .free-prototype .submit {
+    width: 100% !important;
+  }
+}
+@media (max-width: 640px) {
+  form {
+    max-width: 90% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+@media (max-width: 640px) {
+  section#free-design, section#free-prototype,
+  .free-design, .free-prototype {
+    display: block !important;
+    width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  section#free-design form, section#free-prototype form,
+  .free-design form, .free-prototype form {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  section#free-design form * ,
+  section#free-prototype form * ,
+  .free-design form * ,
+  .free-prototype form * {
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box;
+  }
+
+  section#free-design input,
+  section#free-prototype input,
+  .free-design input,
+  .free-prototype input,
+  section#free-design textarea,
+  section#free-prototype textarea,
+  .free-design textarea,
+  .free-prototype textarea {
+    width: 100% !important;
+    font-size: 16px;
+  }
+}
