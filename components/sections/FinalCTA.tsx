@@ -1,7 +1,8 @@
 "use client"
 
-import { motion } from "framer-motion"
 import Link from "next/link"
+
+import { motion } from "framer-motion"
 
 export default function FinalCTA() {
   return (
@@ -19,7 +20,7 @@ export default function FinalCTA() {
         >
           <Link
             href="#free-design"
-            className="px-8 py-4 text-lg font-bold rounded-lg shadow-lg text-white bg-green-600 animate-bounce"
+            className="animate-bounce rounded-lg bg-green-600 px-8 py-4 text-lg font-bold text-white shadow-lg"
           >
             Claim Free Design
           </Link>

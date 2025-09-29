@@ -37,16 +37,22 @@ export default [
         {
           "newlines-between": "always",
           alphabetize: { order: "asc", caseInsensitive: true },
-          groups: [["builtin","external","internal"],["parent","sibling","index"]],
+          groups: [
+            ["builtin", "external", "internal"],
+            ["parent", "sibling", "index"],
+          ],
           pathGroups: [
             { pattern: "react", group: "external", position: "before" },
             { pattern: "next/**", group: "external", position: "before" },
-            { pattern: "@/**", group: "internal" }
+            { pattern: "@/**", group: "internal" },
           ],
-          pathGroupsExcludedImportTypes: ["react"]
-        }
+          pathGroupsExcludedImportTypes: ["react"],
+        },
       ],
-      "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
+      ],
     },
   },
 
@@ -58,17 +64,19 @@ export default [
       "tailwind.config.js",
       "next.config.mjs",
       "vitest.config.ts",
-      "playwright.config.ts"
+      "playwright.config.ts",
     ],
     languageOptions: {
       globals: {
         module: "readonly",
         require: "readonly",
         __dirname: "readonly",
-        process: "readonly"
-      }
-    }
-  }
-,
-  { files:["app/admin/connected/page.tsx"], rules:{ "@typescript-eslint/no-explicit-any":"off" } }
+        process: "readonly",
+      },
+    },
+  },
+  {
+    files: ["app/admin/connected/page.tsx"],
+    rules: { "@typescript-eslint/no-explicit-any": "off" },
+  },
 ]

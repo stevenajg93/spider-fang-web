@@ -1,86 +1,34 @@
 "use client"
 
-import { useEffect, useMemo } from "react"
-
+import { Suspense } from "react"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 
-import { Button } from "@/components/ui/button"
-import { useToast } from "@/components/ui/use-toast"
-import { motion } from "framer-motion"
-
-
-const MEET_LINK = process.env.NEXT_PUBLIC_MEET_LINK || "#"
-
-export default function ThankYouPage() {
-  const { toast } = useToast()
+function ThankYouInner() {
   const params = useSearchParams()
-  const via = params.get("via") // "purchase" | "free" | null
-  const pkg = params.get("pkg")
-
-  const content = useMemo(() => {
-    if (via === "purchase") {
-      return {
-        title: `Thanks — your ${pkg ? pkg : "package"} request is noted`,
-        desc: "We will reach out shortly to confirm details and set up your build schedule. No payment taken yet — this is demo mode.",
-        primaryHref: "/",
-        primaryText: "Back to site",
-        secondaryHref: MEET_LINK,
-        secondaryText: "Book a Call (optional)",
-      }
-    }
-    return {
-      title: "Thanks — your free prototype request is in",
-      desc: "Next step: book your kickoff call so we can understand your vision and start your free £500 homepage prototype.",
-      primaryHref: MEET_LINK,
-      primaryText: "Book Your Kickoff Call",
-      secondaryHref: "/",
-      secondaryText: "Back to site",
-    }
-  }, [via, pkg])
-
-  useEffect(() => {
-    toast({
-      title: via === "purchase" ? "Package enquiry received" : "Free prototype request received",
-      description:
-        via === "purchase"
-          ? `We will confirm your ${pkg ? pkg : "package"} and next steps by email.`
-          : "Please book your kickoff call to begin the free design.",
-    })
-  }, [toast, via, pkg])
+  const name = params.get("name") || "Friend"
 
   return (
-    <main className="min-h-[70vh] place-content-center px-6 py-24 text-center">
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="mx-auto max-w-2xl"
+    <main className="min-h-[60vh] flex flex-col items-center justify-center gap-6 px-6 text-center">
+      <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">Thanks, {name}! 🎉</h1>
+      <p className="text-muted-foreground max-w-xl">
+        Your request is in. Check your email for a link to book a quick Google Meet so we can
+        kick things off and design your homepage — normally £500, yours free.
+      </p>
+      <Link
+        href="/"
+        className="px-6 py-3 rounded-lg bg-green-600 text-white font-semibold shadow hover:opacity-90"
       >
-        <h1 className="text-4xl font-extrabold tracking-tight md:text-6xl">{content.title}</h1>
-        <p className="mt-4 text-muted-foreground md:text-lg">{content.desc}</p>
-
-        <div className="mt-8 flex justify-center gap-3">
-          <Button asChild size="lg">
-            <Link
-              href={content.primaryHref}
-              target={content.primaryHref.startsWith("http") ? "_blank" : undefined}
-              rel="noreferrer"
-            >
-              {content.primaryText}
-            </Link>
-          </Button>
-          <Button asChild size="lg" variant="outline">
-            <Link
-              href={content.secondaryHref}
-              target={content.secondaryHref.startsWith("http") ? "_blank" : undefined}
-              rel="noreferrer"
-            >
-              {content.secondaryText}
-            </Link>
-          </Button>
-        </div>
-      </motion.div>
+        Back to Home
+      </Link>
     </main>
+  )
+}
+
+export default function ThankYouPage() {
+  return (
+    <Suspense fallback={<main className="min-h-[60vh] flex items-center justify-center">Loading…</main>}>
+      <ThankYouInner />
+    </Suspense>
   )
 }
