@@ -1,152 +1,137 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 
-type Slot = { startISO: string; endISO: string; label: string };
-type Day = { date: string; slots: Slot[] };
+const BOOKING_URL = "https://calendar.app.google/gHKSUZSsUMBvM6no8"; // your booking link
 
 export default function FreeDesignForm() {
-  const [days, setDays] = useState<Day[]>([]);
-  const [selectedDate, setSelectedDate] = useState<string>("");
-  const [selectedStartISO, setSelectedStartISO] = useState<string>("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [website, setWebsite] = useState("");
+  const [vision, setVision] = useState("");
+  const [files, setFiles] = useState<FileList | null>(null);
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await fetch("/api/calendar/free-slots");
-        const data = await res.json();
-        if (data.ok) {
-          setDays(data.days || []);
-          // preselect first day with availability
-          const firstWithSlots = (data.days || []).find((d: Day) => d.slots?.length);
-          if (firstWithSlots) {
-            setSelectedDate(firstWithSlots.date);
-            setSelectedStartISO("");
-          }
-        } else {
-          console.error(data.error);
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    })();
-  }, []);
-
-  const slotsForSelectedDay = useMemo(() => {
-    const day = days.find((d) => d.date === selectedDate);
-    return day?.slots ?? [];
-  }, [days, selectedDate]);
-
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleBook(e: React.FormEvent) {
     e.preventDefault();
-    setLoading(true);
-    setSuccess(null);
-    setError(null);
+    setMessage("");
 
-    const fd = new FormData(e.currentTarget);
-    const payload = {
-      name: fd.get("name"),
-      email: fd.get("email"),
-      website: fd.get("website"),
-      vision: fd.get("vision"),
-      startISO: selectedStartISO,
-    };
+    if (!name.trim() || !email.trim() || !vision.trim()) {
+      setMessage("Please complete Name, Email and Vision.");
+      return;
+    }
+
+    setLoading(true);
+
+    // Open a blank tab synchronously (avoids popup blockers), we'll navigate it after submit succeeds
+    const bookingTab = window.open("about:blank");
 
     try {
-      const res = await fetch("/api/calendar/create-event", {
+      const form = new FormData();
+      form.set("name", name.trim());
+      form.set("email", email.trim());
+      form.set("website", website.trim());
+      form.set("vision", vision.trim());
+      if (files) {
+        Array.from(files).slice(0, 10).forEach((f) => form.append("files", f));
+      }
+
+      const res = await fetch("/api/free-design", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: form,
       });
+
       const data = await res.json();
-      if (!data.ok) throw new Error(data.error || "Booking failed");
-      setSuccess(`Booked ✅ Meet link: ${data.meetLink}`);
+
+      if (!res.ok || !data?.ok) {
+        throw new Error(data?.error || "Failed to send details");
+      }
+
+      // Navigate the tab to Google booking
+      if (bookingTab) bookingTab.location.href = BOOKING_URL;
+      else window.location.href = BOOKING_URL;
+
+      // Optional: clear form
+      setName(""); setEmail(""); setWebsite(""); setVision(""); setFiles(null);
     } catch (err: any) {
-      setError(err.message);
+      setMessage(err?.message || "Something went wrong. Please try again.");
+      // If submission failed and we opened a blank tab, close it
+      try { bookingTab?.close(); } catch {}
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <section id="free-prototype" className="py-16">
-      <div className="mx-auto w-full max-w-[600px] px-4">
-        <header className="mb-6">
-          <h2 className="text-3xl font-extrabold text-red-500">Claim Your Free £500 Prototype</h2>
-          <p className="mt-1 text-sm text-white/70">Pick a day, then choose a 30-minute slot (UK time).</p>
-        </header>
+    <section className="mx-auto w-full max-w-3xl rounded-2xl border border-white/10 bg-black/40 p-6 shadow-xl">
+      <h2 className="mb-1 text-center text-3xl font-extrabold">
+        <span className="text-white">Claim Your </span>
+        <span className="text-red-500">FREE £500</span>
+        <span className="text-white"> Prototype</span>
+      </h2>
+      <p className="mb-6 text-center text-white/70">
+        No obligation. Yours to keep even if you do not proceed.
+      </p>
 
-        <form className="flex flex-col gap-4" onSubmit={onSubmit}>
-          <input name="name" type="text" required placeholder="Name" className="rounded-lg border border-white/10 bg-black/40 px-4 py-3 outline-none" />
-          <input name="email" type="email" required placeholder="Email" className="rounded-lg border border-white/10 bg-black/40 px-4 py-3 outline-none" />
-          <input name="website" type="url" placeholder="Website" className="rounded-lg border border-white/10 bg-black/40 px-4 py-3 outline-none" />
-          <textarea name="vision" required placeholder="Vision" className="rounded-lg border border-white/10 bg-black/40 px-4 py-3 outline-none min-h-[120px] resize-vertical" />
+      <form onSubmit={handleBook} className="space-y-4">
+        <input
+          type="text"
+          placeholder="Name *"
+          required
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="w-full rounded-md border border-white/10 bg-black/60 px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+        />
+        <input
+          type="email"
+          placeholder="Email *"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full rounded-md border border-white/10 bg-black/60 px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+        />
+        <input
+          type="url"
+          placeholder="Current Website (optional)"
+          value={website}
+          onChange={(e) => setWebsite(e.target.value)}
+          className="w-full rounded-md border border-white/10 bg-black/60 px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+        />
+        <textarea
+          placeholder="Vision *"
+          required
+          rows={6}
+          value={vision}
+          onChange={(e) => setVision(e.target.value)}
+          className="w-full rounded-md border border-white/10 bg-black/60 px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+        />
 
-          {/* Day dropdown */}
-          <label className="flex flex-col gap-1">
-            <span className="text-sm font-medium text-white/80">Day *</span>
-            <select
-              value={selectedDate}
-              onChange={(e) => {
-                setSelectedDate(e.target.value);
-                setSelectedStartISO("");
-              }}
-              required
-              className="rounded-lg border border-white/10 bg-black/40 px-4 py-3 outline-none"
-            >
-              <option value="" disabled>Select a day</option>
-              {days.map((d) => {
-                const label = new Date(d.date).toLocaleDateString("en-GB", {
-                  weekday: "long",
-                  day: "numeric",
-                  month: "short",
-                });
-                const disabled = (d.slots?.length ?? 0) === 0;
-                return (
-                  <option key={d.date} value={d.date} disabled={disabled}>
-                    {label} {disabled ? "— no availability" : ""}
-                  </option>
-                );
-              })}
-            </select>
+        <div>
+          <label className="mb-1 block text-sm font-medium text-white/80">
+            Attach Files (optional)
           </label>
+          <input
+            type="file"
+            multiple
+            onChange={(e) => setFiles(e.target.files)}
+            className="block w-full cursor-pointer rounded-md border border-white/10 bg-black/60 px-3 py-2 text-sm text-white file:mr-3 file:rounded-md file:border file:border-white/10 file:bg-white/5 file:px-3 file:py-2 file:text-white hover:file:bg-white/10"
+          />
+          <p className="mt-2 text-xs text-white/60">
+            Up to 10 files • 25MB each • Accepted: .png, .jpg, .jpeg, .webp, .gif, .pdf, .doc, .docx, .ppt, .pptx, .key, .sketch, .fig, .zip
+          </p>
+        </div>
 
-          {/* Time dropdown (populated by selected day) */}
-          <label className="flex flex-col gap-1">
-            <span className="text-sm font-medium text-white/80">Time (UK) *</span>
-            <select
-              value={selectedStartISO}
-              onChange={(e) => setSelectedStartISO(e.target.value)}
-              required
-              disabled={!selectedDate || slotsForSelectedDay.length === 0}
-              className="rounded-lg border border-white/10 bg-black/40 px-4 py-3 outline-none disabled:opacity-60"
-            >
-              <option value="" disabled>
-                {selectedDate ? "Select a time" : "Choose a day first"}
-              </option>
-              {slotsForSelectedDay.map((s) => (
-                <option key={s.startISO} value={s.startISO}>
-                  {s.label}
-                </option>
-              ))}
-            </select>
-          </label>
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full rounded-md bg-emerald-600 px-4 py-3 font-semibold text-white transition hover:bg-emerald-500 disabled:opacity-60"
+        >
+          {loading ? "Sending & Opening Booking..." : "Send & Book Kickoff Call"}
+        </button>
 
-          <button
-            type="submit"
-            disabled={loading || !selectedStartISO}
-            className="mt-2 h-12 w-full rounded-lg bg-gradient-to-r from-red-600 to-red-500 font-semibold text-white shadow-lg transition hover:opacity-90 disabled:opacity-50"
-          >
-            {loading ? "Booking..." : "Book Selected Slot"}
-          </button>
-
-          {success && <p className="mt-2 text-green-400 text-sm">{success}</p>}
-          {error && <p className="mt-2 text-red-400 text-sm">{error}</p>}
-        </form>
-      </div>
+        {message && <p className="mt-3 text-center text-sm text-white/80">{message}</p>}
+      </form>
     </section>
   );
 }
