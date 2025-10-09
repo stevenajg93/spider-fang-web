@@ -1,8 +1,9 @@
 "use client"
 
-import { motion } from "framer-motion"
 import Link from "next/link"
+
 import { Card } from "@/components/ui/card"
+import { motion } from "framer-motion"
 
 type Pkg = {
   slug: string
@@ -63,10 +64,10 @@ export default function Packages() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-[clamp(1.6rem,4.6vw,2.6rem)] font-bold tracking-tight text-foreground">
+          <h2 className="text-foreground text-[clamp(1.6rem,4.6vw,2.6rem)] font-bold tracking-tight">
             Our Packages
           </h2>
-          <p className="mt-3 text-muted-foreground">
+          <p className="text-muted-foreground mt-3">
             Choose a starting point or scale to a full solution.
           </p>
         </motion.div>
@@ -80,10 +81,10 @@ export default function Packages() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.05 }}
             >
-              <Card className="group flex h-full flex-col justify-between rounded-2xl border border-border/60 bg-card/70 p-6 backdrop-blur-sm">
+              <Card className="border-border/60 bg-card/70 group flex h-full flex-col justify-between rounded-2xl border p-6 backdrop-blur-sm">
                 <div>
                   <div className="flex items-start justify-between">
-                    <h3 className="text-lg font-semibold text-foreground">{p.name}</h3>
+                    <h3 className="text-foreground text-lg font-semibold">{p.name}</h3>
                     {p.limited && (
                       <span className="rounded-full border border-red-500/40 bg-red-500/10 px-2.5 py-1 text-xs font-semibold text-red-600">
                         Limited Offer
@@ -95,25 +96,10 @@ export default function Packages() {
                   <div className="mt-4">
                     {p.oldPrice ? (
                       <div className="flex items-baseline gap-3">
-                        <span
-                          className="
-                            text-[clamp(1.6rem,4.5vw,2.25rem)]
-                            font-extrabold
-                            leading-none
-                            text-gray-900 dark:text-white
-                            line-through decoration-red-500/70 decoration-2
-                          "
-                        >
+                        <span className="text-[clamp(1.6rem,4.5vw,2.25rem)] font-extrabold leading-none text-gray-900 line-through decoration-red-500/70 decoration-2 dark:text-white">
                           {p.oldPrice}
                         </span>
-                        <span
-                          className="
-                            text-[clamp(1.2rem,4vw,1.6rem)]
-                            font-bold
-                            leading-none
-                            text-emerald-600
-                          "
-                        >
+                        <span className="text-[clamp(1.2rem,4vw,1.6rem)] font-bold leading-none text-emerald-600">
                           {p.newPrice}
                         </span>
                       </div>
@@ -126,20 +112,13 @@ export default function Packages() {
                     )}
                   </div>
 
-                  <p className="mt-4 text-sm text-muted-foreground">{p.blurb}</p>
+                  <p className="text-muted-foreground mt-4 text-sm">{p.blurb}</p>
                 </div>
 
                 <div className="mt-6">
                   <Link
                     href={`/purchase/${p.slug}`}
-                    className="
-                      inline-flex w-full items-center justify-center
-                      rounded-lg border border-emerald-600 bg-emerald-600 px-4 py-2.5
-                      font-semibold text-white shadow-sm transition
-                      hover:bg-emerald-700
-                      focus:outline-none focus:ring-2 focus:ring-emerald-600/30
-                      md:py-3
-                    "
+                    className="inline-flex w-full items-center justify-center rounded-lg border border-emerald-600 bg-emerald-600 px-4 py-2.5 font-semibold text-white shadow-sm transition hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/30 md:py-3"
                   >
                     Select
                   </Link>

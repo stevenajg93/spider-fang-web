@@ -1,7 +1,8 @@
-"use client";
+"use client"
 
 export default function AvailabilityEmbed() {
-  const src = "https://calendar.google.com/calendar/embed?src=s.gillespie%40gecslabs.com&ctz=Europe%2FLondon";
+  const src =
+    "https://calendar.google.com/calendar/embed?src=s.gillespie%40gecslabs.com&ctz=Europe%2FLondon"
   return (
     <div className="mx-auto w-full max-w-6xl px-4">
       <div className="rounded-xl border border-white/10 bg-black/40 p-3 shadow-xl">
@@ -27,5 +28,5 @@ export default function AvailabilityEmbed() {
         </a>
       </div>
     </div>
-  );
+  )
 }

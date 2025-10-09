@@ -1,39 +1,39 @@
-import { NextRequest, NextResponse } from "next/server";
-import Stripe from "stripe";
-import { PACKAGES } from "@/lib/packages";
+import { NextRequest, NextResponse } from "next/server"
 
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
+import { PACKAGES } from "@/lib/packages"
+import Stripe from "stripe"
+
+export const runtime = "nodejs"
+export const dynamic = "force-dynamic"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
   apiVersion: "2024-06-20",
-});
+})
 
 export async function POST(req: NextRequest) {
   try {
-    const { slug, lead } = await req.json();
+    const { slug, lead } = await req.json()
 
     if (!slug || !(slug in PACKAGES)) {
-      return NextResponse.json({ ok: false, error: "Unknown package." }, { status: 400 });
+      return NextResponse.json({ ok: false, error: "Unknown package." }, { status: 400 })
     }
 
     // Require lead on server too (defense-in-depth)
     if (!lead || !lead?.name || !lead?.email) {
       return NextResponse.json(
         { ok: false, error: "Missing lead details. Please submit the form first." },
-        { status: 400 }
-      );
+        { status: 400 },
+      )
     }
 
-    const pkg = PACKAGES[slug as keyof typeof PACKAGES];
+    const pkg = PACKAGES[slug as keyof typeof PACKAGES]
 
     const origin =
-      process.env.NEXT_PUBLIC_SITE_URL ||
-      `${req.nextUrl.protocol}//${req.nextUrl.host}`;
+      process.env.NEXT_PUBLIC_SITE_URL || `${req.nextUrl.protocol}//${req.nextUrl.host}`
 
     if (!pkg.paid || pkg.depositGBP <= 0) {
-      const url = `${origin}/thank-you?pkg=${encodeURIComponent(pkg.title)}`;
-      return NextResponse.json({ ok: true, url });
+      const url = `${origin}/thank-you?pkg=${encodeURIComponent(pkg.title)}`
+      return NextResponse.json({ ok: true, url })
     }
 
     const session = await stripe.checkout.sessions.create({
@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
       allow_promotion_codes: true,
       customer_email: lead.email, // prefill
       success_url: `${origin}/thank-you?pkg=${encodeURIComponent(
-        pkg.title
+        pkg.title,
       )}&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/purchase/${slug}?canceled=1`,
       metadata: {
@@ -67,14 +67,11 @@ export async function POST(req: NextRequest) {
         lead_website: lead.website || "",
         lead_vision: lead.vision || "",
       },
-    });
+    })
 
-    return NextResponse.json({ ok: true, url: session.url });
-  } catch (err: any) {
-    console.error("checkout error:", err);
-    return NextResponse.json(
-      { ok: false, error: err?.message || "Server error" },
-      { status: 500 }
-    );
+    return NextResponse.json({ ok: true, url: session.url })
+  } catch (err: unknown) {
+    console.error("checkout error:", err)
+    return NextResponse.json({ ok: false, error: err?.message || "Server error" }, { status: 500 })
   }
 }

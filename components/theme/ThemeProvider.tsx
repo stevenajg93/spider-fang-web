@@ -3,16 +3,16 @@
 import * as React from "react"
 
 import { ThemeProvider as NextThemesProvider } from "next-themes"
-import { type ThemeProviderProps } from "next-themes/dist/types"
 
-export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
+type Props = { children: React.ReactNode }
+
+export function ThemeProvider({ children }: Props) {
   return (
     <NextThemesProvider
       attribute="class"
-      defaultTheme="light"
-      enableSystem
+      defaultTheme="light" /* start in light mode */
+      enableSystem={false} /* ignore OS theme so the button fully controls it */
       disableTransitionOnChange
-      {...props}
     >
       {children}
     </NextThemesProvider>

@@ -1,91 +1,100 @@
-"use client";
+/* eslint-disable no-empty */
+"use client"
 
-import { useEffect, useMemo, useState } from "react";
-import { useParams, notFound } from "next/navigation";
-import { PACKAGES } from "@/lib/packages";
+import { useEffect, useMemo, useState } from "react"
 
-type Lead = { name: string; email: string; website?: string; vision?: string } | null;
+import { useParams, notFound } from "next/navigation"
+
+import { PACKAGES } from "@/lib/packages"
+
+type Lead = { name: string; email: string; website?: string; vision?: string } | null
 
 export default function PurchasePage() {
-  const { slug } = useParams<{ slug: keyof typeof PACKAGES }>();
-  const pkg = useMemo(() => PACKAGES[slug], [slug]);
+  const { slug } = useParams<{ slug: keyof typeof PACKAGES }>()
+  const pkg = useMemo(() => PACKAGES[slug], [slug])
 
-  const [lead, setLead] = useState<Lead>(null);
-  const [loading, setLoading] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const [msg, setMsg] = useState<string>("");
+  const [lead, setLead] = useState<Lead>(null)
+  const [loading, setLoading] = useState(false)
+  const [saving, setSaving] = useState(false)
+  const [msg, setMsg] = useState<string>("")
 
   // inline quick-form state
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [website, setWebsite] = useState("");
-  const [vision, setVision] = useState("");
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [website, setWebsite] = useState("")
+  const [vision, setVision] = useState("")
 
-  if (!pkg) return notFound();
+  if (!pkg) return notFound()
 
   useEffect(() => {
     try {
-      const raw = localStorage.getItem("sf_lead");
+      const raw = localStorage.getItem("sf_lead")
       if (raw) {
-        const parsed = JSON.parse(raw);
-        setLead(parsed);
+        const parsed = JSON.parse(raw)
+        setLead(parsed)
         // hydrate quick-form so user can edit if needed
-        setName(parsed?.name || "");
-        setEmail(parsed?.email || "");
-        setWebsite(parsed?.website || "");
-        setVision(parsed?.vision || "");
+        setName(parsed?.name || "")
+        setEmail(parsed?.email || "")
+        setWebsite(parsed?.website || "")
+        setVision(parsed?.vision || "")
       }
     } catch {}
-  }, []);
+  }, [])
 
   async function saveDetails() {
-    setMsg("");
+    setMsg("")
     if (!name.trim() || !email.trim()) {
-      setMsg("Please add your name and email.");
-      return;
+      setMsg("Please add your name and email.")
+      return
     }
-    setSaving(true);
-    const payload = { name: name.trim(), email: email.trim(), website: website.trim(), vision: vision.trim(), source: "purchase-page" };
+    setSaving(true)
+    const payload = {
+      name: name.trim(),
+      email: email.trim(),
+      website: website.trim(),
+      vision: vision.trim(),
+      source: "purchase-page",
+    }
 
     try {
       // Persist locally for checkout & future visits
-      localStorage.setItem("sf_lead", JSON.stringify(payload));
-      setLead(payload);
+      localStorage.setItem("sf_lead", JSON.stringify(payload))
+      setLead(payload)
 
       // Fire & forget to your existing endpoint (won’t block UX)
       fetch("/api/free-design", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
-      }).catch(() => {});
-      setMsg("Details saved — you can pay the deposit now.");
-    } catch (e: any) {
-      setMsg(e?.message || "Unable to save details.");
+      }).catch(() => {})
+      setMsg("Details saved — you can pay the deposit now.")
+    } catch (e: unknown) {
+      setMsg(e?.message || "Unable to save details.")
     } finally {
-      setSaving(false);
+      setSaving(false)
     }
   }
 
   async function handlePay() {
-    setMsg("");
+    setMsg("")
     if (!lead || !lead?.name || !lead?.email) {
-      setMsg("Add your details first (quick form above).");
-      return;
+      setMsg("Add your details first (quick form above).")
+      return
     }
-    setLoading(true);
+    setLoading(true)
     try {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ slug, lead }),
-      });
-      const data = await res.json();
-      if (!res.ok || !data?.ok || !data?.url) throw new Error(data?.error || "Checkout failed");
-      window.location.href = data.url;
-    } catch (e: any) {
-      setMsg(e?.message || "Something went wrong.");
+      })
+      const data = await res.json()
+      if (!res.ok || !data?.ok || !data?.url) throw new Error(data?.error || "Checkout failed")
+      window.location.href = data.url
+    } catch (e: unknown) {
+      setMsg(e?.message || "Something went wrong.")
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
   }
 
@@ -95,14 +104,15 @@ export default function PurchasePage() {
         <h1 className="text-3xl font-bold text-white">{pkg.title}</h1>
 
         <p className="mt-2 text-white/75">
-          Reserve your build with a <span className="font-semibold text-emerald-400">50% deposit (£{pkg.depositGBP})</span>.
+          Reserve your build with a{" "}
+          <span className="font-semibold text-emerald-400">50% deposit (£{pkg.depositGBP})</span>.
           The remaining balance is collected on delivery.
         </p>
 
         {/* Quick details panel */}
         <div className="mt-6 rounded-xl border border-white/10 bg-white/5 p-4">
           <div className="mb-3 flex items-center justify-between">
-            <p className="text-white/90 font-medium">Quick details (60s)</p>
+            <p className="font-medium text-white/90">Quick details (60s)</p>
             <span className={`text-xs ${lead ? "text-emerald-400" : "text-amber-300"}`}>
               {lead ? "Saved" : "Required before payment"}
             </span>
@@ -166,10 +176,11 @@ export default function PurchasePage() {
         </div>
 
         <p className="mt-6 text-xs text-white/50">
-          By reserving, you agree we’ll schedule your build and begin planning. Deposits are applied to the final
-          invoice. If anything changes, just reply to the confirmation email — we’re friendly.
+          By reserving, you agree we’ll schedule your build and begin planning. Deposits are applied
+          to the final invoice. If anything changes, just reply to the confirmation email — we’re
+          friendly.
         </p>
       </div>
     </main>
-  );
+  )
 }

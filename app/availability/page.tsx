@@ -1,9 +1,9 @@
-import AvailabilityEmbed from "@/components/AvailabilityEmbed";
+import AvailabilityEmbed from "@/components/AvailabilityEmbed"
 
 export const metadata = {
   title: "Availability | Spider Fang",
   description: "View live availability in your local timezone.",
-};
+}
 
 export default function AvailabilityPage() {
   return (
@@ -14,7 +14,8 @@ export default function AvailabilityPage() {
           <span className="text-red-500">Availability</span>
         </h1>
         <p className="mt-2 text-white/70">
-          This calendar shows current availability (Europe/London). Times will auto-adjust to your device timezone.
+          This calendar shows current availability (Europe/London). Times will auto-adjust to your
+          device timezone.
         </p>
       </section>
 
@@ -22,5 +23,5 @@ export default function AvailabilityPage() {
         <AvailabilityEmbed />
       </section>
     </main>
-  );
+  )
 }
