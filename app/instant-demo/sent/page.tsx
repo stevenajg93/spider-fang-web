@@ -93,40 +93,18 @@ function SentInner() {
         )}
 
         {/* Four CTAs */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
-          <button
-            onClick={() => doCheckout("landing-page", "Launch £199")}
-            disabled={busy !== null}
-            className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-sm border border-zinc-300 hover:bg-zinc-50 transition"
-          >
-            {busy === "landing-page" ? "Loading…" : "Launch (£199)"}
-          </button>
+        
+<div className="mb-6">
+  <a
+    href={askBookingUrl}
+    target={askBookingUrl.startsWith("http") ? "_blank" : undefined}
+    rel="noopener noreferrer"
+    className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-sm bg-red-600 text-white hover:bg-red-700 transition"
+  >
+    Book a 15-min call
+  </a>
+</div>
 
-          <button
-            onClick={() => doCheckout("three-page", "Upgrade £395")}
-            disabled={busy !== null}
-            className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-sm border border-zinc-300 hover:bg-zinc-50 transition"
-          >
-            {busy === "three-page" ? "Loading…" : "Upgrade (£395)"}
-          </button>
-
-          <button
-            onClick={() => doCheckout("five-page", "Go Full Stack £795")}
-            disabled={busy !== null}
-            className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-sm bg-black text-white hover:opacity-90 transition"
-          >
-            {busy === "five-page" ? "Loading…" : "Go Full Stack (£795)"}
-          </button>
-
-          <a
-            href={askBookingUrl}
-            target={askBookingUrl.startsWith("http") ? "_blank" : undefined}
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-sm border border-zinc-300 hover:bg-zinc-50 transition"
-          >
-            Ask (AI / Web3 / XR)
-          </a>
-        </div>
 
         {/* Existing actions */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">

@@ -16,9 +16,10 @@ export default function Page() {
       <Hero />
       <WhoWeAre />
       <FreeDesignForm />
-      <WhyItWorks />
       <Urgency />
       <Packages />
+      {/* Moved here to sit directly above the final “Claim/Start Free Design” section */}
+      <WhyItWorks />
       <FinalCTA />
     </main>
   )

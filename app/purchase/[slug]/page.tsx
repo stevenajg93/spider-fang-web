@@ -104,8 +104,8 @@ export default function PurchasePage() {
         <h1 className="text-3xl font-bold text-white">{pkg.title}</h1>
 
         <p className="mt-2 text-white/75">
-          Reserve your build with a{" "}
-          <span className="font-semibold text-emerald-400">50% deposit (£{pkg.depositGBP})</span>.
+          Secure your build with a{" "}
+          <span className="font-semibold text-emerald-400">project fee (£{pkg.depositGBP})</span>.
           The remaining balance is collected on delivery.
         </p>
 
@@ -162,7 +162,7 @@ export default function PurchasePage() {
             className="w-full rounded-md bg-emerald-600 px-4 py-3 font-semibold text-white transition hover:bg-emerald-500 disabled:opacity-60"
             title={!lead ? "Add your details above to continue" : ""}
           >
-            {loading ? "Redirecting to Stripe..." : `Pay £${pkg.depositGBP} Deposit`}
+            {loading ? "Redirecting to Stripe..." : `Pay £${pkg.depositGBP} Fee`}
           </button>
 
           <a

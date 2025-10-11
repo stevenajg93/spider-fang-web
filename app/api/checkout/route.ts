@@ -45,8 +45,8 @@ export async function POST(req: NextRequest) {
             currency: "gbp",
             unit_amount: pkg.depositGBP * 100,
             product_data: {
-              name: `${pkg.title} — 50% deposit`,
-              description: "Deposit to reserve your project slot.",
+              name: `${pkg.title} — project fee`,
+              description: "Project fee to secure your build slot.",
             },
           },
           quantity: 1,
