@@ -1,0 +1,72 @@
+/* Light-mode only, leaves dark mode untouched */
+html:not(.dark) body {
+  background: #ffffff;
+  color: #0a0a0a;
+}
+
+/* Ensure main content doesn’t inherit forced dark backgrounds */
+html:not(.dark) main,
+html:not(.dark) section,
+html:not(.dark) article {
+  background: transparent;
+}
+
+/* Headings & body text for readability */
+html:not(.dark) h1,
+html:not(.dark) h2,
+html:not(.dark) h3,
+html:not(.dark) h4,
+html:not(.dark) h5,
+html:not(.dark) h6 {
+  color: #0a0a0a;
+}
+html:not(.dark) p,
+html:not(.dark) li,
+html:not(.dark) small {
+  color: #1a1a1a;
+}
+
+/* Cards/panels that had dark fills */
+html:not(.dark) .bg-black,
+html:not(.dark) .bg-neutral-950,
+html:not(.dark) .bg-zinc-950,
+html:not(.dark) .bg-slate-950,
+html:not(.dark) .bg-gray-950 {
+  background: #ffffff !important;
+}
+
+/* Text utilities that were white-on-dark */
+html:not(.dark) .text-white,
+html:not(.dark) .text-neutral-200,
+html:not(.dark) .text-gray-200 {
+  color: #0a0a0a !important;
+}
+
+/* Borders & rings tuned for light */
+html:not(.dark) .ring-white\/10 {
+  --tw-ring-color: rgba(0, 0, 0, 0.1) !important;
+}
+html:not(.dark) .border-white\/10 {
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Primary button on light (class used in header/footer) */
+html:not(.dark) .btn-primary {
+  background: #111;
+  color: #fff;
+  border: 1px solid #0a0a0a;
+}
+
+/* Links clearer on light */
+html:not(.dark) a {
+  text-underline-offset: 2px;
+}
+html:not(.dark) a:hover {
+  text-decoration: underline;
+}
+
+/* Focus rings visible on light */
+html:not(.dark) :where(a, button, [role="button"]):focus-visible {
+  outline: 2px solid #111;
+  outline-offset: 2px;
+}
